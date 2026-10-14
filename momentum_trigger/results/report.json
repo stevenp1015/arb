@@ -1,0 +1,151 @@
+{
+  "diagnostics": {
+    "arms": 17013,
+    "counterparty_fills": 709,
+    "queue_fills": 239,
+    "triggered": 1130
+  },
+  "entry_mode_sensitivity": {
+    "counterparty_bbo": {
+      "clustered_n": 599,
+      "gross_mean_bps": -1.8061736330599332,
+      "net_ci95_high_bps": -8.826041545353872,
+      "net_ci95_low_bps": -10.499806027982055,
+      "net_mean_bps": -9.682422070956562,
+      "positive_day_fraction": 0.0,
+      "raw_n": 709
+    },
+    "matched_random": {
+      "clustered_n": 574,
+      "gross_mean_bps": -1.7829796189963343,
+      "net_ci95_high_bps": -9.106170526798065,
+      "net_ci95_low_bps": -9.995430760253166,
+      "net_mean_bps": -9.535958780898898,
+      "positive_day_fraction": 0.0,
+      "raw_n": 574
+    },
+    "queue_bbo": {
+      "clustered_n": 220,
+      "gross_mean_bps": -0.8469166272630986,
+      "net_ci95_high_bps": -4.263138394068494,
+      "net_ci95_low_bps": -6.594293665224548,
+      "net_mean_bps": -5.397981682849603,
+      "positive_day_fraction": 0.0,
+      "raw_n": 239
+    },
+    "stop_market": {
+      "clustered_n": 599,
+      "gross_mean_bps": -2.7800334249839267,
+      "net_ci95_high_bps": -9.787041099895488,
+      "net_ci95_low_bps": -11.44706814739425,
+      "net_mean_bps": -10.642073407979778,
+      "positive_day_fraction": 0.0,
+      "raw_n": 709
+    }
+  },
+  "frozen_config": {
+    "exit": {
+      "activation_bps": 20.0,
+      "hard_stop_bps": 30.0,
+      "max_hold_ms": 30000,
+      "trail_bps": 10.0
+    },
+    "fee_assumptions_bps": {
+      "maker": 0.0,
+      "taker_each_leg": 4.0
+    },
+    "holdout_opened": true,
+    "placement_latency_ms": 100,
+    "stage1_selection": {
+      "active_days": 10,
+      "active_symbol_days": 80,
+      "active_symbols": 8,
+      "event_weighted_mean_bps": -9.265262020518087,
+      "key": "w1000_q0.9950_s500_r1.00_f0.55",
+      "n": 7407,
+      "score": -9.272054444834508,
+      "selection_floor": 150,
+      "symbol_day_mean_bps": -9.203944462978415,
+      "symbol_day_se_bps": 0.13621996371218667
+    },
+    "stage2_selection": {
+      "active_days": 10,
+      "active_symbol_days": 69,
+      "active_symbols": 8,
+      "arms": 12722,
+      "event_weighted_mean_bps": -7.967290096527896,
+      "key": "o5_ttl1000",
+      "n": 477,
+      "score": -7.535397084543236,
+      "selection_floor": 75,
+      "symbol_day_mean_bps": -7.140430889006431,
+      "symbol_day_se_bps": 0.7899323910736094,
+      "trigger_rate": 0.06909290991982393,
+      "triggered": 879
+    },
+    "stage3_selection": {
+      "active_days": 10,
+      "active_symbol_days": 69,
+      "active_symbols": 8,
+      "event_weighted_mean_bps": -8.270751739998895,
+      "key": "h30_a20_t10_m30000",
+      "n": 507,
+      "score": -8.056248379482433,
+      "selection_floor": 75,
+      "symbol_day_mean_bps": -7.692800126091829,
+      "symbol_day_se_bps": 0.7268965067812082
+    },
+    "sustain": {
+      "flow_min": 0.55,
+      "impulse_ms": 1000,
+      "quantile": 0.995,
+      "retain": 1.0,
+      "sustain_ms": 500
+    },
+    "trigger": {
+      "offset_bps": 5.0,
+      "ttl_ms": 1000
+    }
+  },
+  "gate_checks": {
+    "beats_matched_random": false,
+    "both_halves_positive": false,
+    "ci95_lower_positive": false,
+    "n_at_least_100": true,
+    "net_mean_positive": false
+  },
+  "layer_ablation": {
+    "impulse_only_5s": {
+      "clustered_n": 14107,
+      "gross_mean_bps": -1.8109055315337848,
+      "net_ci95_high_bps": -9.68071563608531,
+      "net_ci95_low_bps": -9.862436787353912,
+      "net_mean_bps": -9.772431464002633,
+      "positive_day_fraction": 0.0,
+      "raw_n": 19918
+    },
+    "sustain_immediate_5s": {
+      "clustered_n": 7867,
+      "gross_mean_bps": -1.5327166726791164,
+      "net_ci95_high_bps": -9.420348445272134,
+      "net_ci95_low_bps": -9.614565816810773,
+      "net_mean_bps": -9.52265476094314,
+      "positive_day_fraction": 0.0,
+      "raw_n": 10289
+    },
+    "triggered_5s": {
+      "clustered_n": 567,
+      "gross_mean_bps": -2.3729765862772303,
+      "net_ci95_high_bps": -9.28825580261172,
+      "net_ci95_low_bps": -10.849472268893718,
+      "net_mean_bps": -10.116395654447308,
+      "positive_day_fraction": 0.0,
+      "raw_n": 669
+    }
+  },
+  "pass": false,
+  "primary_half_means_bps": {
+    "20260621_25": -9.770600727899003,
+    "20260626_30": -9.852555228635145
+  }
+}

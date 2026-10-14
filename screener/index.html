@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>perp screener</title>
+  <link rel="icon" type="image/svg+xml" href="./icons/logo.svg">
+  <Link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- ily youre so smart you lil SHITTER ! -->
+  <!-- where do i put a svg element? -->
+  <!-- response: put it in the header element <body><header><svg>...</svg>....</header></body> thanks bae -->
+  <!-- oh oops lol I'm gay! is that okay? | reply: AS LONG AS YOUR NOT A DICKHEAD I DONT GIVE A SHIT(-->
+  <!-- wait but what if i want to only define the svg like as a class can i do that in style? -->
+
+  <!-- CSS Styling  --------------------->
+  <style>
+    :root {
+      --bg: var(--aster);
+      --panel: var(--taupe-900);
+      --line: var(--taupe-700);
+      --txt: var(--taupe-100);
+      --dim: var(--taupe-500);
+      --up: #26c281;
+      --dn: #f0616d;
+      --acc: #5aa9e6;
+      --warn: #e8b04b;
+
+      /* Here is a color pallette of tailwind's TAUPE theme.  */
+      --taupe-50: #fbfaf9;
+      --taupe-100: #f3f1f1;
+      --taupe-200: #e8e4e3;
+      --taupe-300: #d8d2d0;
+      --taupe-400: #aba09c;
+      --taupe-500: #7c6d67;
+      --taupe-600: #5b4f4b;
+      --taupe-700: #473c39;
+      --taupe-800: #2b2422;
+      --taupe-900: #1d1816;
+      --taupe-950: #0c0a09;
+      --aster: #181818;
+
+
+    }
+
+    * {
+      box-sizing: border-box;
+      scrollbar-color: rgba(234, 234, 234, 0.1) transparent;
+    }
+
+    /* CMD held: make nested scroll containers invisible to pointer/wheel events
+   so the browser scrolls the page instead */
+
+    html.cmd {
+      cursor: ns-resize !important;
+    }
+
+    html.cmd .section>.body {
+      pointer-events: none;
+    }
+
+    html.page-scroll {
+      cursor: ns-resize !important;
+    }
+
+    html.page-scroll .section>.body {
+      pointer-events: none;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background: transparent;
+
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(234, 234, 234, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      display: flex;
+      flex-direction: column
+    }
+
+    header {
+      flex: 0 0 auto;
+      z-index: 20;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 6px 10px
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center
+    }
+
+    .bar+.bar {
+      margin-top: 6px
+    }
+
+    h1 {
+      font-size: 13px;
+      margin: 0 10px 0 0;
+      font-weight: 600;
+      letter-spacing: .5px;
+      color: #fff
+    }
+
+    input,
+    select,
+    button {
+      background: linear-gradient(135deg, var(--aster), var(--taupe-900));
+      color: var(--txt);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 3px 6px;
+      font: inherit;
+      outline: none
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--acc);
+    }
+
+    button {
+      cursor: pointer;
+      position: relative;
+    }
+
+    button::after {
+      content: '';
+      inset: 0;
+      position: absolute;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: var(--acc);
+      box-shadow: 0 0 3px 1px #aaa;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity .14s ease-out;
+    }
+
+    button:hover::after {
+      opacity: 1;
+    }
+
+
+    button.colsbtn {
+      font-size: 16px;
+      font-weight: 700;
+      align-items: center;
+      color: var(--acc);
+      vertical-align: center;
+      margin-right: 6px;
+      text-align: center;
+    }
+
+    button.colsbtn::before {
+      content: '☰';
+      inset: 0;
+      position: absolute;
+      z-index: 3;
+      color: var(--up);
+      align-items: center;
+      vertical-align: center;
+      opacity: 0;
+      transition: opacity .14s ease-out;
+    }
+
+    button.colsbtn:hover::before {
+      opacity: 1;
+    }
+
+    button.on {
+      background: #1b2b3a;
+      border-color: var(--acc);
+      color: #cfe6fb
+    }
+
+    button:disabled {
+      opacity: .35;
+      cursor: default
+    }
+
+    button:disabled:hover {
+      border-color: var(--line)
+    }
+
+    .pill {
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      color: var(--dim)
+    }
+
+    .pill b {
+      color: var(--txt);
+      font-weight: 600
+    }
+
+    .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle
+    }
+
+    .live {
+      background: var(--up);
+      box-shadow: 0 0 6px var(--up)
+    }
+
+    .dead {
+      background: var(--dn);
+      box-shadow: 0 0 6px var(--dn)
+    }
+
+    /* ---- main split: table area beside the watchlist ---- */
+    #main {
+      flex: 1 1 auto;
+      display: flex;
+      min-height: 0;
+      min-width: 0;
+      cursor: default;
+    }
+
+
+    /* ---- panes ---- */
+    #panes {
+      flex: 1 1 auto;
+      display: flex;
+      min-height: 0;
+      min-width: 0
+    }
+
+    #panes.stacked {
+      flex-direction: column
+    }
+
+    .pane {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+    }
+
+    #panes:not(.stacked) .pane+.pane {
+      border-left: 1px solid var(--line)
+    }
+
+    #panes.stacked .pane+.pane {
+      border-top: 1px solid var(--line)
+    }
+
+    body:not(.split) .pane.second {
+      display: none
+    }
+
+    .pstrip {
+      flex: 0 0 auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 2px 8px;
+      background: #0f1318;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .pstrip .spacer {
+      flex: 1 1 auto
+    }
+
+    .pstrip button {
+      padding: 0 6px;
+      font-size: 11px
+    }
+
+    .plabel {
+      color: var(--acc);
+      font-weight: 600
+    }
+
+    body:not(.split) .plabel,
+    body:not(.split) .pshown {
+      display: none
+    }
+
+    .wrap {
+      flex: 1 1 auto;
+      overflow: auto;
+      min-height: 0
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 5px 6px;
+      text-align: center;
+      white-space: nowrap;
+      cursor: pointer;
+      color: var(--dim);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .resizer {
+      position: absolute;
+      top: 0;
+      background: linear-gradient(to left, var(--line) 0%, transparent 50%);
+      opacity: 0.4;
+      right: 0;
+      width: 8px;
+      border-right: 1px solid var(--line);
+      height: 100%;
+      cursor: col-resize;
+      user-select: none;
+      z-index: 15;
+    }
+
+    /* sticky needs a stacking context, so the resizer's absolute positioning works within it */
+    thead th {
+      contain: layout style;
+    }
+
+    .resizer:hover,
+    .resizer.resizing {
+      background: linear-gradient(to left, var(--line) 0%, transparent 50%);
+      opacity: 1;
+    }
+
+    thead th:hover {
+      color: var(--txt)
+    }
+
+    thead th.sorted {
+      color: var(--acc)
+    }
+
+    /* hold a header for a second and it lifts; drag it where you want it */
+    thead th.dragging {
+      color: #fff;
+      background: var(--taupe-700, #473c39);
+      opacity: .85;
+    }
+
+    /* Where it lands if you let go now. Deliberately heavier than it needs to
+       be: every column already carries a thin resizer line on its right edge,
+       and a 2px accent next to that just reads as another border. */
+    thead th.dropbefore {
+      box-shadow: inset 3px 0 0 var(--acc), inset 12px 0 14px -10px var(--acc);
+    }
+
+    thead th.dropafter {
+      box-shadow: inset -3px 0 0 var(--acc), inset -12px 0 14px -10px var(--acc);
+    }
+
+    body.col-dragging {
+      cursor: grabbing !important;
+      user-select: none;
+    }
+
+    body.col-dragging thead th {
+      cursor: grabbing;
+    }
+
+    thead th.l,
+    tbody td.l {
+      text-align: left
+    }
+
+    tbody td {
+      padding: 3px 6px;
+      text-align: right;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--taupe-800);
+    }
+
+    tbody td.spark {
+      padding: 0;
+      background: red;
+    }
+
+    /* JS-driven hover class: immune to style recalc flicker from set() */
+    tbody tr.hovrow>td {
+      box-shadow: inset 0 0 0 200px rgba(255, 255, 255, 0.1);
+    }
+
+    tbody tr.star td {
+      background: #141d18
+    }
+
+    tbody tr.star.hovrow td {
+      background: #18241d
+    }
+
+    tbody tr.flash td {
+      animation: fl .9s ease-out
+    }
+
+    @keyframes fl {
+      from {
+        background: #2a3a4d
+      }
+
+      to {}
+    }
+
+    .sym {
+      color: #fff;
+      font-weight: 600
+    }
+
+    .sym a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .sym a:hover {
+      color: var(--acc);
+      text-decoration: underline
+    }
+
+    .ven {
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 1px
+    }
+
+    .ven i {
+      font-style: normal;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .ven .g {
+      background: #243447;
+      color: #8fc0ea
+    }
+
+    .ven .a {
+      background: #3a2f1f;
+      color: #e8c07a
+    }
+
+    .st {
+      cursor: pointer;
+      color: #3c4753;
+      width: 16px
+    }
+
+    .st.on {
+      color: var(--warn)
+    }
+
+    .note {
+      cursor: pointer;
+      color: #3c4753
+    }
+
+    .note.has {
+      color: var(--acc)
+    }
+
+    .posbar {
+      display: inline-block;
+      width: calc(100% - 4px);
+      min-width: 30px;
+      height: 7px;
+      background: #1b222a;
+      border-radius: 2px;
+      position: relative;
+      vertical-align: middle
+    }
+
+    .posbar i {
+      position: absolute;
+      top: -1px;
+      width: 2px;
+      height: 9px;
+      background: var(--acc);
+      border-radius: 1px
+    }
+
+    canvas {
+      vertical-align: middle;
+      display: block
+    }
+
+    .muted {
+      color: var(--dim)
+    }
+
+    /* ---- column picker ---- */
+    .colmenu {
+      display: none;
+      position: absolute;
+      top: 22px;
+      right: 6px;
+      z-index: 30;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      width: 190px;
+      box-shadow: 0 8px 24px #000c;
+      max-height: 72vh;
+      overflow: auto
+    }
+
+    .colmenu.open {
+      display: block
+    }
+
+    .colmenu .presets {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px
+    }
+
+    .colmenu .presets button {
+      flex: 1 1 0;
+      font-size: 11px
+    }
+
+    .colmenu label {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 2px 0;
+      cursor: pointer;
+      color: var(--txt)
+    }
+
+    .colmenu label.fixed {
+      color: var(--dim);
+      cursor: default
+    }
+
+    .colmenu input[type=checkbox] {
+      margin: 0;
+      accent-color: var(--acc)
+    }
+
+    #modal {
+      position: fixed;
+      inset: 0;
+      background: #000a;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50
+    }
+
+    #modal.show {
+      display: flex
+    }
+
+    #box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      width: 340px
+    }
+
+    #box h3 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: #fff
+    }
+
+    #box label {
+      display: block;
+      margin: 8px 0 3px;
+      color: var(--dim)
+    }
+
+    #box input {
+      width: 100%
+    }
+
+    #box .row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: flex-end
+    }
+
+    .legend {
+      color: var(--dim);
+      font-size: 11px
+    }
+
+    /* ---- campaign fire log ---- */
+    #campbar {
+      display: none;
+      align-items: center;
+      gap: 8px
+    }
+
+    #campbar.show {
+      display: flex
+    }
+
+    #camplog {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      overflow: hidden
+    }
+
+    .fired {
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 1px 8px;
+      color: var(--txt);
+      background: rgba(232, 176, 75, .10);
+      white-space: nowrap
+    }
+
+    .fired i {
+      color: var(--dim);
+      font-style: normal
+    }
+
+    /* ---- watchlist sidebar ---- */
+    #watch {
+      flex: 0 0 240px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--panel);
+      border-left: 1px solid var(--line)
+    }
+
+    body:not(.watch) #watch {
+      display: none
+    }
+
+    #watch .whead {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      gap: 5px
+    }
+
+    #watch .whead .row {
+      display: flex;
+      gap: 6px;
+      align-items: center
+    }
+
+    #watch h2 {
+      font-size: 12px;
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: .5px;
+      color: #fff;
+      flex: 1 1 auto
+    }
+
+    #watch .whead input[type=search] {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    /* The add box is a real picker now, not a bare input with a datalist you
+       had to already know the answer to use. Same interaction as the order
+       ticket: type, arrow, enter. */
+    #wpick {
+      position: relative;
+      flex: 1 1 auto;
+      min-width: 240px;
+    }
+
+    #wlist {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      margin-top: 3px;
+      width: 280px;
+      max-height: 340px;
+      overflow-y: auto;
+      background: var(--taupe-900);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .6);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      z-index: 80
+    }
+
+    #wlist.open {
+      display: block
+    }
+
+    #wlist .wp {
+      display: flex;
+      align-items: center;
+
+      gap: 6px;
+      padding: 4px 7px;
+      border-bottom: 1px solid var(--taupe-800);
+      cursor: pointer;
+    }
+
+    #wlist .wp:last-child {
+      border-bottom: 0
+    }
+
+    #wlist .wp.active,
+    #wlist .wp:hover {
+      background: rgba(255, 255, 255, .05)
+    }
+
+    #wlist .wp .n {
+      font-weight: 600;
+      min-width: 62px;
+      flex: 0 0 auto
+    }
+
+    #wlist .wp:hover .n {
+      color: var(--acc)
+    }
+
+    #wlist .wp .v {
+      color: var(--dim);
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    #wlist .wp .p {
+      color: var(--taupe-300);
+      flex: 0 0 auto
+    }
+
+    #wlist .wp .c {
+      flex: 0 0 auto;
+      min-width: 48px;
+      text-align: right
+    }
+
+    #wlist .wp .plus {
+      flex: 0 0 auto;
+      padding: 0 2px;
+      color: var(--dim);
+      line-height: 1.2
+    }
+
+    #wlist .wp .plus:hover {
+      color: var(--up);
+      border-color: var(--up)
+    }
+
+    #wlist .wp .plus.in {
+      color: var(--up);
+      border-color: var(--up)
+    }
+
+    #wlist .hint {
+      padding: 4px 7px;
+      color: var(--dim);
+      font-size: 10px;
+      border-bottom: 1px solid var(--taupe-800)
+    }
+
+    #wbody {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      min-height: 0
+    }
+
+    #wbody .empty {
+      color: var(--dim);
+      font-size: 11px;
+      padding: 10px 8px;
+      line-height: 1.5
+    }
+
+    .witem {
+      /* The full watchlist item */
+      border-bottom: 1px solid var(--taupe-800);
+      background: linear-gradient(180deg, var(--taupe-900), var(--taupe-950), var(--taupe-900));
+      padding: 3px 12px 3px 12px;
+    }
+
+    .witem .l1 {
+      /* The symbol, price, percent line */
+      display: flex;
+      align-items: baseline;
+      padding: 3px;
+      z-index: 100;
+      gap: 6px;
+    }
+
+    .witem .wlogo {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      object-fit: contain;
+      flex: 0 0 auto;
+      align-self: center;
+    }
+
+    .witem .wsym {
+      /* The symbol text */
+      flex: 1 1 auto;
+      position: relative;
+      color: var(--taupe-200);
+
+      font-size: 14px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      cursor: pointer;
+      font-weight: 200;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .witem .wsym:hover {
+      text-decoration: underline
+    }
+
+    .witem .wpx {
+      /* The price */
+      color: var(--taupe-200);
+      font-weight: 200;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 14px;
+      padding-right: 36px;
+      font-variant-numeric: tabular-nums
+    }
+
+    .witem .wpx.flash-up>span {
+      color: var(--up)
+    }
+
+    .witem .wpx.flash-dn>span {
+      color: var(--dn)
+    }
+
+    .witem .wpx>span {
+      /* default: inherit from .wpx which is var(--txt) */
+
+    }
+
+    .witem .wpx>span.d-up {
+      color: var(--up)
+    }
+
+    .witem .wpx>span.d-dn {
+      color: var(--dn)
+    }
+
+    /* percent change */
+    .witem .wpct {
+      min-width: 58px;
+      text-align: right;
+      padding: 1px 4px;
+      font-size: 14px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-weight: 200;
+      border-radius: 3px;
+      font-variant-numeric: tabular-nums
+    }
+
+    /* The order widget that slides under the symbol when you click it. */
+    .witem .l2 {
+      display: flex;
+      position: absolute;
+      align-items: center;
+      gap: 4px;
+      transform: translateY(-23px);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+
+    /* Show the order widget when the symbol is clicked */
+    .witem .l2.visible {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+
+    .witem .l2 select,
+    .witem .l2 button,
+    .witem .l2 input {
+      font-size: 10px;
+      padding: 1px 3px;
+      border-radius: 3px
+    }
+
+    .witem .l2 select {
+      width: 56px
+    }
+
+    .witem .l2 input[type=time] {
+      width: 74px
+    }
+
+    .witem .l2 .spacer {
+      flex: 1 1 auto
+    }
+
+    /* "own mark" or "off mark" status and the time aka stupid little text "own mark hh:mm @ (price)"  but now i hid it and dont feel like getting it back lol */
+    .witem .wnote {
+      color: var(--dim);
+      font-size: 10px;
+      position: absolute;
+      z-index: 0;
+      opacity: 0;
+      transform: translateY(-23px);
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+
+    .witem .wnote.visible {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+
+    .witem .wnote.err {
+      color: var(--warn)
+    }
+
+    #wadd.reject {
+      border-color: var(--dn);
+      animation: shake .3s
+    }
+
+    @keyframes shake {
+
+      25%,
+      75% {
+        transform: translateX(-3px)
+      }
+
+      50% {
+        transform: translateX(3px)
+      }
+    }
+
+    .witem .wdel {
+      color: var(--dn);
+      border-color: transparent;
+      background: transparent;
+      font-size: 13px;
+      line-height: 1;
+      padding: 0 3px
+    }
+  </style>
+</head>
+
+<header>
+  <div class="bar">
+    <h1>PERP SCREENER</h1>
+    <span class="pill"><span id="dot" class="dot dead"></span><span id="conn">Connecting...</span></span>
+    <span class="pill">Pairs: <b id="npairs">0</b></span>
+    <span class="pill">Shown: <b id="nshown">0</b></span>
+    <span class="pill">Daily Reset: <b id="reset">--:--:--</b></span>
+    <span class="pill">Anchors: <b id="anch">-</b></span>
+    <span class="pill" id="tapepill" title="the raw trade websocket that feeds MaxPrint, Big(1h) and Flow">Tape: <b
+        id="tape">-</b></span>
+    <span class="legend" id="skipped"></span>
+  </div>
+  <div class="bar">
+    <input type="search" id="q" placeholder="Search..." style="width:170px">
+    <select id="ven">
+      <option value="">Venue: any</option>
+      <option value="G">Gate</option>
+      <option value="A">Aster</option>
+      <option value="GA">Both</option>
+      <option value="Gonly">Gate only</option>
+      <option value="Aonly">Aster only</option>
+    </select>
+    <select id="minv">
+      <option value="0">Min 24h vol: any</option>
+      <option value="100000">$100k</option>
+      <option value="1000000">$1M</option>
+      <option value="10000000">$10M</option>
+      <option value="100000000">$100M</option>
+    </select>
+    <select id="lim">
+      <option value="100">Top 100</option>
+      <option value="50">Top 50</option>
+      <option value="250">Top 250</option>
+      <option value="9999">All</option>
+    </select>
+    <button id="starOnly">&#9733; Only</button>
+    <button id="gateOnly">Gate Only</button>
+    <button id="freeze" title="stop rows jumping around while you read">freeze order</button>
+    <button id="mark" title="snapshot every 1D% now; the &Delta;mark column then shows movement since">mark
+      now</button>
+    <span class="pill">Mark: <b id="markage">never</b></span>
+    <label class="legend">Alert |1m|&ge;
+      <input id="alertPct" type="number" step="0.1" value="0" style="width:52px"> %</label>
+    <label class="legend"
+      title="fires once when a pair crosses this many spike-minutes inside the last hour - the campaign starting, not a single twitch">Campaign
+      &ge;
+      <input id="campHits" type="number" step="1" min="0" value="0" style="width:46px"> hits/h</label>
+    <button id="beep" title="audible ping on alert">Sound</button>
+  </div>
+  <div class="bar">
+    <button id="split" title="second pane showing the same pairs sorted the other way">Split View</button>
+    <button id="stack" title="side by side, or stacked top and bottom">Stacked</button>
+    <button id="link" title="linked: clicking a column sorts both panes by it, one up one down">Link Sort</button>
+    <button id="watchbtn" title="a fixed panel on the right that tracks the pairs you pick">Watchlist</button>
+    <button id="hunt"
+      title="two panes, spike-sorted opposite ways, campaign columns on - the layout you rebuild by hand every time">Campaign
+      Hunt</button>
+    <span class="legend" id="splithint"></span>
+  </div>
+  <div class="bar" id="campbar">
+    <span class="legend">Woke up:</span>
+    <span class="legend" id="camplog"></span>
+  </div>
+</header>
+
+<div id="main">
+  <div id="panes"></div>
+
+  <aside id="watch">
+    <div class="whead"> <!-- watchlist HEADER -->
+      <div class="row">
+        <h2>WATCHLIST</h2>
+        <select id="wdef" title="the % basis used by every pair that has not been given its own">
+          <option value="m1">1m</option>
+          <option value="m5">5m</option>
+          <option value="m15">15m</option>
+          <option value="h1">1h</option>
+          <option value="h4">4H</option>
+          <option value="d1">1D</option>
+          <option value="d7">1W</option>
+          <option value="mark">mark</option>
+        </select>
+      </div>
+      <div class="row">
+        <div id="wpick">
+          <input type="search" id="wadd" placeholder="add pair..." autocomplete="off"> <!-- LOOK ITS YOU LOL !!! -->
+          <div id="wlist"></div>
+        </div>
+        <button id="wstars" title="add every pair you have starred">+&#9733;</button>
+      </div>
+    </div>
+    <div id="wbody"></div>
+  </aside>
+</div>
+
+<div id="modal">
+  <div id="box">
+    <h3 id="mtitle">Note</h3>
+    <label>Target Price</label>
+    <input id="mtgt" type="number" step="any" placeholder="e.g. 0.0421">
+    <label>Note</label>
+    <input id="mnote" placeholder="Why you're watching it">
+    <div class="row">
+      <button id="mdel">Clear</button>
+      <button id="mcancel">Cancel</button>
+      <button id="msave" class="on">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  "use strict";
+
+  // ---------------------------------------------------------------- Columns
+  // Key, Label, Type, Title
+  const COLS = [
+    ["star", "★", "star", "watchlist"],
+    ["sym", "Symbol", "sym", ""],
+    ["ven", "Venue", "ven", "G = Gate perp, A = Aster perp"],
+    ["last", "Price", "px", ""],
+    ["spark", "30m", "spark", "last 30 minutes"],
+    ["m1", "1m", "pct", "rolling last 60 seconds"],
+    ["m5", "5m", "pct", "rolling last 5 minutes"],
+    ["m15", "15m", "pct", "rolling last 15 minutes"],
+    ["h1", "1h", "pct", "rolling last 60 minutes"],
+    ["h4", "4H", "pct", "from the 4-hour candle open (UTC aligned)"],
+    ["d1", "1D", "pct", "from the daily candle open — 00:00 UTC, which is 8pm ET now and 7pm ET after daylight saving ends"],
+    ["d7", "1W", "pct", "from the daily open 7 days ago"],
+    ["dmark", "Δmark", "pct", "change since the price you marked"],
+    ["bmark", "Best↑", "pct", "the BEST it got since you marked, not where it ended up. A pair that ran +35% and gave it all back reads 0 on Δmark and looks like it did nothing"],
+    ["wmark", "Worst↓", "pct", "the worst it got since you marked"],
+    ["off7lo", "From 7dLo", "pct", "how far above its 7-day low it is - how far into this move you are"],
+    ["loage", "LowAge", "num", "days since that 7-day low. Up 180% off a low set 5 days ago is late; up 60% off yesterday's low is early"],
+    ["off7hi", "From 7dHi", "pct", "how far below its 7-day high it is"],
+    ["dhi", "High(1d)", "pct", "day high vs day open - the best it managed today"],
+    ["dlo", "Low(1d)", "pct", "day low vs day open"],
+    ["pos", "Range", "pos", "where price sits inside today's high-low range"],
+    ["tgt", "→ Tgt", "pct", "distance to the target price you set"],
+    ["q24", "Vol(24h)", "usd", "24h quote volume on Binance"],
+    ["vph", "Vol/hr", "usd", "quote volume this hour is on pace for"],
+    ["rvol", "RVOL", "num", "this hour's pace vs this pair's own typical hour - above ~3 means it just woke up"],
+    ["spk", "Spike", "pct", "biggest excursion inside any 60s stretch of the last minute"],
+    ["rspk", "RSpike", "num", "that spike measured against this pair's OWN typical minute - 3 means three times jumpier than it usually is. Comparable across pairs, unlike raw Spike"],
+    ["sph1", "Hits(1h)", "num", "how many separate minutes in the last hour moved at least 1%"],
+    ["sph6", "Hits(6h)", "num", "how many separate minutes in the last 6 hours moved at least 1% - a pump campaign shows up here as a big number"],
+    ["mprint", "MaxPrint", "usd", "largest single trade in the last 5 minutes, in dollars"],
+    ["big1h", "Big(1h)", "num", "how many trades over $50k printed in the last hour"],
+    ["flow", "Flow", "pct", "share of the last 5 minutes of volume that hit the ask rather than the bid: +100 all aggressive buying, -100 all aggressive selling"],
+    ["age", "Update", "age", "seconds since the price last actually moved - a big number means a dead pair"],
+    ["note", "✎", "note", "note / target"],
+  ];
+  const COLBY = {};
+  COLS.forEach(c => COLBY[c[0]] = c);
+  const ALL_COLS = COLS.map(c => c[0]);
+  // Fits two panes side by side on a normal window with no horizontal scroll
+  const COMPACT_COLS = ["star", "sym", "ven", "last", "spark", "m1", "m5", "m15", "h1", "d1", "dmark", "pos", "rvol", "spk", "age", "note"];
+  const NOSORT = new Set(["star", "note", "spark"]);
+  const MANDATORY = new Set(["sym"]);
+
+  // Turning a column back on drops it where it belongs in the canonical order
+  // above, not on the end. Now that panes keep their own arrangement, "the
+  // end" would be a strange place for Price to reappear just because you
+  // unticked and reticked it.
+  function insertCanonical(cols, key) {
+    if (cols.includes(key)) return cols.slice();
+    const want = ALL_COLS.indexOf(key);
+    let at = cols.length;
+    for (let i = 0; i < cols.length; i++) {
+      if (ALL_COLS.indexOf(cols[i]) > want) { at = i; break; }
+    }
+    const next = cols.slice();
+    next.splice(at, 0, key);
+    return next;
+  }
+
+  // Sensible defaults for table-layout: fixed. Without these, columns
+  // that haven't been manually resized get an equal share of the table
+  // width, which crushes star/note into nothing and starves sym/ven.
+  const DEFAULT_WIDTHS = {
+    star: 24, sym: 82, ven: 34, note: 24,
+    last: 70, spark: 70, pos: 54,
+    m1: 52, m5: 52, m15: 52, h1: 52, h4: 52, d1: 52, d7: 52,
+    dmark: 56, bmark: 56, wmark: 56,
+    off7lo: 62, off7hi: 62, loage: 46,
+    dhi: 56, dlo: 56, tgt: 52,
+    q24: 62, vph: 56, rvol: 44,
+    spk: 48, rspk: 48, sph1: 48, sph6: 48,
+    mprint: 62, big1h: 48, flow: 48,
+    age: 44,
+  };
+
+  // ---------------------------------------------------------------- State
+  let META = [];                 // index -> {s,b,v,p,g,a}
+  let IDX_BY_SYM = {};           // "BTCUSDT" -> index (watchlist tracks names, not slots)
+  const R = [];                  // index -> row object
+  let SPARK = {};                // index -> array
+  let starOnly = false, frozen = false, sound = false;
+  const alertAt = {};            // symbol index -> last alert ms (shared across panes)
+  const campAt = {};             // last campaign alert per pair
+  const campSeen = {};           // last Hits(1h) seen, to catch the crossing
+  const CAMPLOG = [];            // recent campaign fires, newest first
+
+  function loadJSON(k, dflt) {
+    try { const v = JSON.parse(localStorage.getItem("scr." + k)); return v === null ? dflt : v; }
+    catch (e) { return dflt; }
+  }
+  const store = {
+    stars: loadJSON("stars", {}),
+    notes: loadJSON("notes", {}),
+    mark: loadJSON("mark", null),
+    widths: loadJSON("widths", {}),
+    // { open, def, items:[{s, basis|null, mpx, mts}] }.  basis null means
+    // "follow the default", so changing the default moves every pair that
+    // has not been given one of its own.
+    watch: loadJSON("watch", { open: false, def: "d1", items: [] }),
+  };
+  if (!Array.isArray(store.watch.items)) store.watch.items = [];
+  if (!store.watch.def) store.watch.def = "d1";
+  // Sanitize any corrupted column widths (feedback loop could have stored absurd values)
+  for (const k in store.widths) {
+    if (store.widths[k] > 500) { delete store.widths[k]; }
+  }
+  function save(k) { localStorage.setItem("scr." + k, JSON.stringify(store[k])); }
+  function saveRaw(k, v) { localStorage.setItem("scr." + k, JSON.stringify(v)); }
+
+  const layout = Object.assign(
+    {
+      split: false, stacked: false, linked: true,
+      panes: [{ sortKey: "d1", sortDir: -1 }, { sortKey: "d1", sortDir: 1 }]
+    },
+    loadJSON("layout", {}));
+  function saveLayout() {
+    layout.panes = PANES.map(p => ({ sortKey: p.sortKey, sortDir: p.sortDir }));
+    saveRaw("layout", layout);
+  }
+
+  const $ = (id) => document.getElementById(id);
+
+  // ---------------------------------------------------------------- Format
+
+  // Formatting the price (to 2-9 decimals depending on value)
+  // In this function:
+  // v = price value (the price from the websocket)
+  // p = precision (number of decimals)
+  // d = number of decimals (automatically calculated based on the value of v, if p is not provided)
+  function fmtPx(v, p) {
+    if (v === null || v === undefined || !isFinite(v)) return ""; // when fetched from websocket, if the price value (v) is null or undefined, return an empty string
+    if (v === 0) return "0"; // when v is 0, return "0"
+    const a = Math.abs(v); // absolute value of v
+    let d = a >= 1000 ? 2 : a >= 100 ? 3 : a >= 1 ? 4 : a >= 0.01 ? 5 : a >= 0.0001 ? 7 : 9; // when d is undefined, calculate d based on the value of v
+    if (p !== undefined && p !== null) d = Math.min(d, p); // if p is defined and not null, set d to the minimum of d and p
+    return v.toFixed(d).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""); // format v to d decimals
+  }
+  // Format percentage
+  function fmtPct(v) {
+    if (v === null || v === undefined || !isFinite(v)) return "";
+    return (v > 0 ? "+" : "") + v.toFixed(2);
+  }
+  // Format USD
+  function fmtUsd(v) {
+    if (v === null || v === undefined || !isFinite(v)) return "";
+    const a = Math.abs(v);
+    if (a >= 1e9) return (v / 1e9).toFixed(2) + "B";
+    if (a >= 1e6) return (v / 1e6).toFixed(1) + "M";
+    if (a >= 1e3) return (v / 1e3).toFixed(0) + "K";
+    return v.toFixed(0);
+  }
+  // Color code based on % (red to green, darker the higher)
+  function pctColor(v, span) {
+    if (v === null || v === undefined || !isFinite(v) || v === 0) return "";
+    const s = span || 8;
+    const k = Math.min(1, Math.abs(v) / s);
+    const c = v > 0 ? "38,194,129" : "240,97,109";
+    return "color:rgb(" + c + ");background:rgba(" + c + "," + (k * 0.20).toFixed(3) + ")";
+  }
+  // Color code for Δmark with blueish-teal tint (#26c29a -> rgb(38, 194, 154))
+  function dmarkColor(v, span) {
+    if (v === null || v === undefined || !isFinite(v) || v === 0) return "";
+    const s = span || 6;
+    const k = Math.min(1, Math.abs(v) / s);
+    const c = v > 0 ? "48,214,194" : "240,97,140";
+    return "color:rgb(" + c + ");background:rgba(" + c + "," + (k * 0.20).toFixed(3) + ")";
+  }
+
+  // Set the cell text and style
+  function set(td, txt, style) {
+    if (!td) return;
+    if (td._t !== txt) { td.textContent = txt; td._t = txt; }
+    if (td._s !== style) { td.style.cssText = style; td._s = style; }
+  }
+  // Draw sparkline - 30m candle chart
+  // A "spark" is the small chart that shows the price history of a pair.
+  // cv = canvas element for the spark
+  // arr = array of price values (30m candle prices)
+  // up = boolean indicating whether the price is up or down
+  function drawSpark(cv, arr, up) {
+    // Use the stored column width as the authoritative size, falling back to 62
+    const targetW = Math.max(20, (store.widths["spark"] || 66) - 4);
+    if (cv.width !== targetW) {
+      cv.width = targetW;
+      cv.style.width = targetW + "px";
+    }
+    const ctx = cv.getContext("2d");
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    if (!arr || arr.length < 2) return;
+    let lo = Infinity, hi = -Infinity;
+    for (const v of arr) { if (v < lo) lo = v; if (v > hi) hi = v; }
+    // A pair that hasn't moved should still draw a line, centered, not clipped against the bottom edge where it reads as "no data"
+    if (!isFinite(lo) || hi === lo) { lo -= 0.5; hi = lo + 1; }
+    const w = cv.width, h = cv.height, n = arr.length;
+    ctx.beginPath();
+    for (let k = 0; k < n; k++) {
+      const x = k * (w - 1) / (n - 1); // x-coordinate of the point
+      const y = h - 1 - (arr[k] - lo) / (hi - lo) * (h - 2); // y-coordinate of the point
+      if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = up >= 0 ? "#26c281" : "#f0616d";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // If the price range includes 0, draw a horizontal line at 0
+    if (lo < 0 && hi > 0) {
+      const y = h - 1 - (0 - lo) / (hi - lo) * (h - 2);
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.strokeStyle = "#2a323b";
+      ctx.stroke();
+    }
+  }
+
+  // ---------------------------------------------------------------- Filters
+  // Filters are shared by both panes on purpose: the point of the split is to
+  // look at the same set of pairs from both ends, not at two different sets.
+  // // r = row object (this is the object that contains all the data for a single row)
+  // // i = index (0..N-1)
+  // // s = symbol (uppercase, e.g. "BTC/USDC")
+  // // b = base currency (uppercase, e.g. "BTC")
+  // // q = quote currency (uppercase, e.g. "USDC")
+  // // v = venue (e.g. "G" for Gemini LMFAO, "A" for Arch)
+  // // p = price (e.g. 0.12345678)
+  // // G = grouped flag (true if grouped)
+  // // A = alert (true if alert)
+  // // Q24 = 24h quote volume in USD
+  function passes(r) {
+    const m = META[r.i];
+    if (!m) return false;
+    if (starOnly && !store.stars[m.s]) return false;
+    const q = $("q").value.trim().toUpperCase();
+    if (q && m.b.indexOf(q) === -1 && m.s.indexOf(q) === -1) return false;
+    const v = $("ven").value;
+    if (v === "G" && !m.v.includes("G")) return false;
+    if (v === "A" && !m.v.includes("A")) return false;
+    if (v === "GA" && m.v !== "GA") return false;
+    if (v === "Gonly" && m.v !== "G") return false;
+    if (v === "Aonly" && m.v !== "A") return false;
+    const mv = +$("minv").value;
+    if (mv && (r.q24 || 0) < mv) return false;
+    return true;
+  }
+
+  // ---------------------------------------------------------------- pane
+  const PANES = [];
+
+  class Pane {
+    constructor(idx, defaultCols) {
+      this.idx = idx;
+      const saved = layout.panes[idx] || {};
+      this.sortKey = saved.sortKey || "d1";
+      this.sortDir = saved.sortDir || (idx ? 1 : -1);
+      this.cols = loadJSON("cols" + idx, null) || defaultCols.slice();
+      this.cols = this.cols.filter(k => COLBY[k]);
+      // One-time tidy, the first load after the header became draggable.
+      //
+      // Until now the stored cols array was a SET — the rendering filtered COLS
+      // by it and the order in the array meant nothing, so ticking a column on
+      // just shoved its name on the end. Those appended names are still in
+      // there. Honouring the array from here on would make a pane come back
+      // looking shuffled on the strength of clicks that were never about
+      // arrangement. So: sort once to the canonical order, which is exactly
+      // what was on screen yesterday, and from now on the array is the layout.
+      if (!localStorage.getItem("scr.colorder.v1")) {
+        this.cols.sort((a, b) => ALL_COLS.indexOf(a) - ALL_COLS.indexOf(b));
+        saveRaw("cols" + idx, this.cols);
+      }
+      for (const k of MANDATORY) if (!this.cols.includes(k)) this.cols.push(k);
+      // Ensure spark and pos are available in both panes (one-time inject if missing from saved cols)
+      for (const inject of ["spark", "pos"]) {
+        if (!this.cols.includes(inject)) {
+          // Insert after "last" if possible, otherwise just append
+          const afterLast = this.cols.indexOf("last");
+          if (afterLast !== -1) this.cols.splice(afterLast + 1, 0, inject);
+          else this.cols.push(inject);
+          saveRaw("cols" + idx, this.cols);
+        }
+      }
+      this.trs = new Map();
+      this.order = [];
+      this.build();
+    }
+
+    visible() { return this.idx === 0 || layout.split; }
+
+    build() {
+      const root = document.createElement("div");
+      root.className = "pane" + (this.idx ? " second" : "");
+      root.innerHTML =
+        '<div class="pstrip">' +
+        '<span class="plabel"></span>' +
+        '<span class="pshown muted"></span>' +
+        '<span class="spacer"></span>' +
+        '<button class="colsbtn" title="Select columns to display in this pane">☰</button>' +
+        '</div>' +
+        '<div class="colmenu"></div>' +
+        '<div class="wrap"><table><thead><tr></tr></thead><tbody></tbody></table></div>';
+      this.root = root;
+      this.label = root.querySelector(".plabel");
+      this.shownEl = root.querySelector(".pshown");
+      this.menu = root.querySelector(".colmenu");
+      this.hrow = root.querySelector("thead tr");
+      this.tb = root.querySelector("tbody");
+      root.querySelector(".colsbtn").onclick = (e) => {
+        e.stopPropagation();
+        const open = !this.menu.classList.contains("open");
+        closeMenus();
+        this.menu.classList.toggle("open", open);
+      };
+      this.menu.onclick = (e) => e.stopPropagation();
+
+      // Delegated hover tracking via class instead of CSS :hover.
+      // :hover gets re-evaluated on every style recalc (set() writes
+      // cssText ~20x per frame), causing visible flicker. A class
+      // set by mouseenter/mouseleave is stable through all of that.
+      let hoveredTr = null;
+      this.tb.addEventListener("mouseover", (e) => {
+        const tr = e.target.closest("tr");
+        if (tr === hoveredTr) return;
+        if (hoveredTr) hoveredTr.classList.remove("hovrow");
+        hoveredTr = tr;
+        if (tr) tr.classList.add("hovrow");
+      });
+      this.tb.addEventListener("mouseleave", () => {
+        if (hoveredTr) { hoveredTr.classList.remove("hovrow"); hoveredTr = null; }
+      });
+
+      this.buildMenu();
+      this.buildHead();
+      $("panes").appendChild(root);
+    }
+
+    // -- columns ---------------------------------------------------------
+    // Reads this.cols IN ORDER rather than filtering COLS. That one word is
+    // what makes the header draggable: until now the arrangement was whatever
+    // order the constant at the top of this file happened to be in, and a pane
+    // could not put Spike next to Symbol no matter what its cols array said.
+    // Cells are keyed by column name (see makeRow), so nothing downstream
+    // cares where a column ends up.
+    visibleCols() { return this.cols.map(k => COLBY[k]).filter(Boolean); }
+
+    buildMenu() {
+      this.menu.innerHTML = "";
+      const pre = document.createElement("div");
+      pre.className = "presets";
+      for (const [lbl, keys] of [["all", ALL_COLS], ["compact", COMPACT_COLS]]) {
+        const b = document.createElement("button");
+        b.textContent = lbl;
+        b.onclick = () => { this.cols = keys.slice(); this.colsChanged(); };
+        pre.appendChild(b);
+      }
+      this.menu.appendChild(pre);
+      for (const c of COLS) {
+        const lab = document.createElement("label");
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = this.cols.includes(c[0]);
+        if (MANDATORY.has(c[0])) { cb.disabled = true; lab.className = "fixed"; }
+        cb.onchange = () => {
+          if (cb.checked) this.cols = insertCanonical(this.cols, c[0]);
+          else this.cols = this.cols.filter(k => k !== c[0]);
+          this.colsChanged(true);
+        };
+        lab.appendChild(cb);
+        lab.appendChild(document.createTextNode(c[1] === "★" ? "★ star"
+          : c[1] === "✎" ? "✎ note" : c[1]));
+        if (c[3]) lab.title = c[3];
+        this.menu.appendChild(lab);
+      }
+    }
+
+    colsChanged(keepMenu) {
+      // Sorting by a column that you just hid would leave no way to change it back
+      if (!this.cols.includes(this.sortKey)) this.sortKey = "d1";
+      saveRaw("cols" + this.idx, this.cols);
+      if (!keepMenu) this.buildMenu();
+      this.rebuild();
+    }
+
+    rebuild() {
+      this.trs.clear();
+      this.tb.innerHTML = "";
+      this.order = [];
+      this.buildHead();
+      this.render(true);
+    }
+
+    // -- header ----------------------------------------------------------
+    buildHead() {
+      this.hrow.innerHTML = "";
+      const showing = this.visibleCols();
+      for (let ci = 0; ci < showing.length; ci++) {
+        const c = showing[ci];
+        const th = document.createElement("th");
+        if (c[3]) th.title = c[3];
+        if (c[2] === "sym" || c[2] === "ven" || c[2] === "star" || c[2] === "note") th.className = "l";
+        th.dataset.k = c[0];
+        this.wireReorder(th, ci);
+
+
+        const txtSpan = document.createElement("span");
+        txtSpan.className = "th-txt";
+        th.appendChild(txtSpan);
+
+        const resizer = document.createElement("div");
+        resizer.className = "resizer";
+        resizer.onclick = (e) => e.stopPropagation();
+        resizer.onpointerdown = (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          resizer.classList.add("resizing");
+          const startX = e.clientX;
+          const startWidth = th.offsetWidth;
+          const k = c[0];
+
+          const onPointerMove = (me) => {
+            const nw = Math.max(20, startWidth + (me.clientX - startX));
+            store.widths[k] = nw;
+            save("widths");
+            for (const p of PANES) {
+              const targetTh = p.hrow.querySelector('th[data-k="' + k + '"]');
+              if (targetTh) {
+                targetTh.style.width = nw + "px";
+                targetTh.style.minWidth = nw + "px";
+              }
+            }
+            if (k === "spark") {
+              forceDrawSparks();
+            } else if (k === "pos") {
+              renderAll(false);
+            }
+          };
+
+          const onPointerUp = () => {
+            resizer.classList.remove("resizing");
+            window.removeEventListener("pointermove", onPointerMove);
+            window.removeEventListener("pointerup", onPointerUp);
+          };
+
+          window.addEventListener("pointermove", onPointerMove);
+          window.addEventListener("pointerup", onPointerUp);
+        };
+        th.appendChild(resizer);
+
+        th.onclick = () => {
+          // a press that turned into a drag must not also sort
+          if (this._noclick) { this._noclick = false; return; }
+          this.sortBy(c[0]);
+        };
+
+        if (store.widths[c[0]]) {
+          th.style.width = store.widths[c[0]] + "px";
+          th.style.minWidth = store.widths[c[0]] + "px";
+        } else if (DEFAULT_WIDTHS[c[0]]) {
+          th.style.width = DEFAULT_WIDTHS[c[0]] + "px";
+        }
+
+        this.hrow.appendChild(th);
+      }
+      this.paintHead();
+    }
+
+    /**
+     * Hold a header for a second, then drag it somewhere else.
+     *
+     * Three gestures share this one cell and they are told apart by time and
+     * by where the pointer went down, not by modifier keys:
+     *
+     *   click            sort
+     *   hold 1s, drag    move the column
+     *   drag the edge    resize (the .resizer swallows its own pointerdown)
+     *
+     * The hold is abandoned if the pointer wanders more than a few pixels
+     * before the second is up, so a slightly shaky click on a column you only
+     * meant to sort by does not start hauling it around.
+     */
+    wireReorder(th, from) {
+      const pane = this;
+      th.onpointerdown = (e) => {
+        if (e.button !== 0) return;
+        const x0 = e.clientX, y0 = e.clientY;
+        let dragging = false;
+        let over = from;
+
+        const indexAt = (x) => {
+          const ths = pane.hrow.children;
+          for (let i = 0; i < ths.length; i++) {
+            const r = ths[i].getBoundingClientRect();
+            if (x < r.left + r.width / 2) return i;
+          }
+          return ths.length - 1;
+        };
+        const paintDrop = () => {
+          for (const el of pane.hrow.children) el.classList.remove("dropbefore", "dropafter");
+          if (over !== from && pane.hrow.children[over]) {
+            pane.hrow.children[over].classList.add(over > from ? "dropafter" : "dropbefore");
+          }
+        };
+        const cleanup = () => {
+          clearTimeout(timer);
+          window.removeEventListener("pointermove", onMove);
+          window.removeEventListener("pointerup", onUp);
+          window.removeEventListener("pointercancel", onUp);
+          th.classList.remove("dragging");
+          document.body.classList.remove("col-dragging");
+          for (const el of pane.hrow.children) el.classList.remove("dropbefore", "dropafter");
+        };
+        const onMove = (me) => {
+          if (!dragging) {
+            if (Math.abs(me.clientX - x0) > 5 || Math.abs(me.clientY - y0) > 5) cleanup();
+            return;
+          }
+          over = indexAt(me.clientX);
+          paintDrop();
+        };
+        const onUp = () => {
+          const moved = dragging && over !== from;
+          const to = over;
+          cleanup();
+          if (!moved) return;
+          const next = pane.cols.slice();
+          const [k] = next.splice(from, 1);
+          next.splice(to, 0, k);
+          pane.cols = next;
+          saveRaw("cols" + pane.idx, pane.cols);
+          pane.rebuild();
+        };
+        const timer = setTimeout(() => {
+          dragging = true;
+          pane._noclick = true;
+          th.classList.add("dragging");
+          document.body.classList.add("col-dragging");
+          paintDrop();
+        }, 1000);
+
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        window.addEventListener("pointercancel", onUp);
+      };
+    }
+
+    paintHead() {
+      for (const th of this.hrow.children) {
+        const k = th.dataset.k;
+        const on = k === this.sortKey;
+        th.classList.toggle("sorted", on);
+        const base = COLBY[k][1];
+        const txtEl = th.querySelector(".th-txt");
+        if (txtEl) {
+          txtEl.textContent = on ? base + (this.sortDir > 0 ? " ▲" : " ▼") : base;
+        }
+        if (store.widths[k]) {
+          th.style.width = store.widths[k] + "px";
+          th.style.minWidth = store.widths[k] + "px";
+        }
+      }
+      const c = COLBY[this.sortKey];
+      this.label.textContent = (c ? c[1] : this.sortKey) + (this.sortDir > 0 ? " ▲ Ascending" : " ▼ Descending");
+    }
+
+    sortBy(key) {
+      if (NOSORT.has(key)) return;
+      if (this.sortKey === key) this.sortDir = -this.sortDir;
+      else { this.sortKey = key; this.sortDir = -1; }
+      if (layout.linked) {
+        // The whole point of the mirror: the other pane follows the same column, without needing to set it twice
+        const other = PANES[1 - this.idx];
+        if (other) {
+          other.sortKey = key;
+          other.sortDir = -this.sortDir;
+          if (!other.cols.includes(key)) {
+            other.cols = insertCanonical(other.cols, key);
+            saveRaw("cols" + other.idx, other.cols);
+            other.buildMenu();
+            other.rebuild();
+          } else {
+            other.paintHead();
+            other.render(true);
+          }
+        }
+      }
+      this.paintHead();
+      this.render(true);
+      saveLayout();
+    }
+
+    // -- rows ------------------------------------------------------------
+    makeRow(i) {
+      const m = META[i];
+      const tr = document.createElement("tr");
+      const cells = {};
+      for (const c of this.visibleCols()) {
+        const td = document.createElement("td");
+        const t = c[2];
+        if (t === "sym" || t === "ven" || t === "star" || t === "note") td.className = "l";
+        if (t === "star") {
+          td.className = "l st";
+          td.textContent = "★";
+          td.onclick = () => {
+            if (store.stars[m.s]) delete store.stars[m.s]; else store.stars[m.s] = 1;
+            save("stars"); renderAll(true);
+          };
+        } else if (t === "sym") {
+          td.className = "l sym";
+          const a = document.createElement("a");
+          a.href = "https://www.tradingview.com/chart/?symbol=BINANCE%3A" + m.s + ".P";
+          a.target = "_blank"; a.rel = "noopener";
+          a.textContent = m.b;
+          a.title = m.s + "  → TradingView";
+          td.appendChild(a);
+        } else if (t === "ven") {
+          td.className = "l ven";
+          let h = "";
+          if (m.v.includes("G")) h += '<i class="g">G</i>';
+          if (m.v.includes("A")) h += '<i class="a">A</i>';
+          td.innerHTML = h;
+          td.title = (m.g ? "Gate: " + m.g + "  " : "") + (m.a ? "Aster: " + m.a : "");
+        } else if (t === "spark") {
+          td.style.overflow = "hidden";
+          const cv = document.createElement("canvas");
+          const sw = store.widths["spark"] || 66;
+          cv.width = Math.max(20, sw - 4); cv.height = 16;
+          cv.style.width = cv.width + "px"; cv.style.height = "16px";
+          cv.style.display = "block";
+          cv.style.marginLeft = "";
+          td.appendChild(cv);
+          cells._cv = cv;
+        } else if (t === "pos") {
+          td.innerHTML = '<span class="posbar"><i style="left:0"></i></span>';
+        } else if (t === "note") {
+          td.className = "l note";
+          td.textContent = "✎";
+          td.onclick = () => openNote(m.s);
+        }
+        cells[c[0]] = td;
+        tr.appendChild(td);
+      }
+      const rec = { tr, cells, i };
+      this.trs.set(i, rec);
+      return rec;
+    }
+
+    // Row painting logic
+    paintRow(rec, r) {
+      const m = META[rec.i];
+      const c = rec.cells;
+      const nt = store.notes[m.s];
+
+      // Starred / Noted
+      rec.tr.classList.toggle("star", !!store.stars[m.s]);
+      if (c.star) c.star.classList.toggle("on", !!store.stars[m.s]);
+      if (c.note) {
+        c.note.classList.toggle("has", !!nt);
+        if (nt) c.note.title = (nt.note || "") + (nt.tgt ? "  target " + nt.tgt : "");
+      }
+
+      // Price & Time
+      set(c.last, fmtPx(r.last, m.p), "");
+      for (const k of ["m1", "m5", "m15", "h1", "h4", "d1", "d7", "spk", "dhi", "dlo", "tgt"]) {
+        if (!c[k]) continue;
+        const span = (k === "d7") ? 25 : (k === "d1" || k === "dhi" || k === "dlo") ? 12
+          : (k === "spk" || k === "m1") ? 2 : 6;
+        set(c[k], fmtPct(r[k]), pctColor(r[k], span));
+      }
+
+      // Where in the multi-day move: how far off the 7-day low, and how
+      // stale that low is.
+      if (c.off7lo) set(c.off7lo, fmtPct(r.off7lo), pctColor(r.off7lo, 120));
+      if (c.off7hi) set(c.off7hi, fmtPct(r.off7hi), pctColor(r.off7hi, 40));
+      if (c.loage) {
+        const v = r.loage;
+        set(c.loage, (v === null || v === undefined) ? "" : v.toFixed(1),
+          v <= 1 ? "color:#26c281;font-weight:700" : v >= 5 ? "color:#5a636d" : "");
+      }
+      // Best / worst since the mark
+      if (c.bmark) set(c.bmark, fmtPct(r.bmark), dmarkColor(r.bmark, 10));
+      if (c.wmark) set(c.wmark, fmtPct(r.wmark), dmarkColor(r.wmark, 10));
+
+      // Dedicated, with Love&&+Liiqht(:, mark colour/stylinqq .
+      if (c.dmark) {
+        set(c.dmark, fmtPct(r.dmark), dmarkColor(r.dmark, 6)); // c.dmark is the cell for dmark, 6 is the span for dmark. fmtPct formats the percentage. dmarkColor colors the percentage.
+      }
+
+      // TODO: Spark, well like, nevermind. not gonna do it, ever. lol.
+
+      // How persistent the spiking is, which is the thing a single Spike
+      // reading can't tell you. Warm colours as the count climbs.
+      for (const k of ["sph1", "sph6"]) {
+        if (!c[k]) continue;
+        const v = r[k];
+        const heat = k === "sph1" ? 12 : 45;   // roughly "busy" for each window
+        set(c[k], (v === null || v === undefined) ? "" : String(v),
+          !v ? "color:#5a636d"
+            : v >= heat ? "color:#e8b04b;font-weight:700"
+              : v >= heat / 3 ? "color:#9fb6cc" : "");
+      }
+      // Spike normalised by this pair's own typical minute
+      if (c.rspk) {
+        const v = r.rspk;
+        set(c.rspk, (v === null || v === undefined) ? "" : v.toFixed(1),
+          v >= 6 ? "color:#e8b04b;font-weight:700" : v >= 3 ? "color:#9fb6cc" : "");
+      }
+      // Trade tape
+      if (c.mprint) {
+        const v = r.mprint;
+        set(c.mprint, fmtUsd(v),
+          v >= 250000 ? "color:#e8b04b;font-weight:700" : v >= 50000 ? "color:#cfe6fb" : "");
+      }
+      if (c.big1h) {
+        const v = r.big1h;
+        set(c.big1h, (v === null || v === undefined) ? "" : String(v),
+          !v ? "color:#5a636d" : v >= 20 ? "color:#e8b04b;font-weight:700"
+            : v >= 5 ? "color:#9fb6cc" : "");
+      }
+      if (c.flow) set(c.flow, fmtPct(r.flow), pctColor(r.flow, 60));
+
+      // Volume
+      // 24h Cap (24h * price)
+      set(c.q24, fmtUsd(r.q24), r.q24 >= 5e7 ? "color:#cfe6fb" : ""); // Color (light blueish-grey) if >= $50M
+      // Avg 24h volume
+      set(c.vph, fmtUsd(r.vph), "");
+      // Relative volume
+      set(c.rvol, r.rvol === null || r.rvol === undefined ? "" : r.rvol.toFixed(1),
+        r.rvol >= 3 ? "color:#e8b04b;font-weight:700" : r.rvol >= 1.5 ? "color:#9fb6cc" : ""); // Color (gold) if >= 3x vol, color (light blueish-grey) if >= 1.5x vol
+      // Age of 24h metrics
+      set(c.age, r.age === null || r.age === undefined ? "" : (r.age < 60 ? r.age.toFixed(0) : Math.round(r.age / 60) + "m"),
+        r.age > 120 ? "color:#5a636d" : ""); // Color (light blueish-grey) if >= 2 hours old 
+
+      if (c.pos) {
+        const bar = c.pos.firstChild;
+        if (bar && bar.firstChild) {
+          if (r.pos === null || r.pos === undefined) { bar.style.opacity = .2; }
+          else {
+            bar.style.opacity = 1;
+            // Use stored col width to compute pos, NOT bar.clientWidth (that forces a reflow per row)
+            const colW = store.widths["pos"] || 50;
+            const barW = Math.max(1, colW - 14);  // approx padding + border
+            bar.firstChild.style.left = Math.max(0, Math.min(barW, (r.pos / 100) * barW)) + "px";
+          }
+          c.pos.title = r.pos === null || r.pos === undefined ? "" : r.pos.toFixed(0) + "% of today's range";
+        }
+      }
+    }
+
+    // Render / Repaint
+    // This is the main render function that paints the table.
+    render(reorder) {
+      if (!this.visible()) return;
+      const lim = +$("lim").value; // Limit the number of rows to display
+      if (reorder || !frozen) {
+        const list = R.filter(r => r && r.last && passes(r));
+        const k = this.sortKey, dir = this.sortDir;
+        list.sort((a, b) => {
+          let x = a[k], y = b[k];
+          if (k === "sym") { x = META[a.i].b; y = META[b.i].b; return x < y ? -dir : x > y ? dir : 0; }
+          if (k === "ven") { x = META[a.i].v; y = META[b.i].v; return x < y ? -dir : x > y ? dir : 0; }
+          const ax = (x === null || x === undefined || !isFinite(x));
+          const bx = (y === null || y === undefined || !isFinite(y));
+          if (ax && bx) return 0;
+          if (ax) return 1;
+          if (bx) return -1;
+          return (x - y) * dir;
+        });
+        // Starred always on top
+        list.sort((a, b) => (store.stars[META[b.i].s] ? 1 : 0) - (store.stars[META[a.i].s] ? 1 : 0));
+        this.order = list.slice(0, lim).map(r => r.i);
+        const shown = Math.min(list.length, lim) + (list.length > lim ? "/" + list.length : "");
+        this.shownEl.textContent = shown;
+        if (this.idx === 0) $("nshown").textContent = shown;
+        const frag = document.createDocumentFragment();
+        for (const i of this.order) {
+          const rec = this.trs.get(i) || this.makeRow(i);
+          // an older build hid rows with display:none and never cleared it,
+          // which left them invisible through every later re-render
+          if (rec.tr.style.display) rec.tr.style.display = "";
+          frag.appendChild(rec.tr);
+        }
+        this.tb.appendChild(frag);
+        const keep = new Set(this.order);
+        for (const [i, rec] of this.trs) {
+          if (!keep.has(i) && rec.tr.parentNode) rec.tr.remove();
+        }
+      }
+      for (const i of this.order) {
+        const rec = this.trs.get(i);
+        if (rec && R[i]) this.paintRow(rec, R[i]);
+      }
+      // Lock initial column widths once rendered so prices updating live don't shift column sizes
+      for (const th of this.hrow.children) {
+        const k = th.dataset.k;
+        if (!store.widths[k] && !th.dataset.initLocked && th.offsetWidth > 0) {
+          th.style.width = th.offsetWidth + "px";
+          th.style.minWidth = th.offsetWidth + "px";
+          th.dataset.initLocked = "1";
+        }
+      }
+    }
+  }
+
+  function renderAll(reorder) { for (const p of PANES) p.render(reorder); }
+  function closeMenus() { for (const p of PANES) p.menu.classList.remove("open"); }
+  document.addEventListener("click", closeMenus);
+
+  PANES.push(new Pane(0, ALL_COLS));
+  PANES.push(new Pane(1, COMPACT_COLS));
+  // set only after BOTH panes have been through the tidy above
+  localStorage.setItem("scr.colorder.v1", "1");
+
+  // Columns added after a pane's layout was last saved would otherwise never
+  // appear — the saved list wins on load, so a new column stays invisible
+  // until you go hunting in the ☰ menu. Surface each new one ONCE, then
+  // remember we did, so removing it afterwards actually sticks.
+  (function surfaceNewCols() {
+    const ADDED = ["rspk", "sph1", "sph6", "mprint", "big1h", "flow",
+      "bmark", "wmark", "off7lo", "loage", "off7hi"];
+    const seen = loadJSON("seencols", []);
+    const fresh = ADDED.filter(k => !seen.includes(k) && COLBY[k]);
+    if (!fresh.length) return;
+    for (const p of PANES) {
+      let changed = false;
+      for (const k of fresh) {
+        if (p.cols.includes(k)) continue;
+        const at = p.cols.indexOf("spk");
+        if (at !== -1) p.cols.splice(at + 1, 0, k);
+        else p.cols.push(k);
+        changed = true;
+      }
+      if (changed) { saveRaw("cols" + p.idx, p.cols); p.buildHead(); }
+    }
+    saveRaw("seencols", seen.concat(fresh));
+  })();
+
+  // ---------------------------------------------------------------- layout ctl
+  function applyLayout() {
+    document.body.classList.toggle("split", layout.split);
+    $("panes").classList.toggle("stacked", layout.stacked);
+    $("split").classList.toggle("on", layout.split);
+    $("stack").classList.toggle("on", layout.stacked);
+    $("link").classList.toggle("on", layout.linked);
+    $("stack").disabled = !layout.split;
+    $("link").disabled = !layout.split;
+    $("splithint").textContent = layout.split
+      ? (layout.linked ? "Linked columns"
+        : "Unlinked columns")
+      : "";
+    saveRaw("layout", layout);
+  }
+  $("split").onclick = () => {
+    layout.split = !layout.split;
+    if (layout.split && layout.linked) {
+      // entering split with the mirror on: pane 1 takes pane 0's column, inverted
+      const a = PANES[0], b = PANES[1];
+      b.sortKey = a.sortKey;
+      b.sortDir = -a.sortDir;
+      if (!b.cols.includes(b.sortKey)) {
+        b.cols.push(b.sortKey);
+        saveRaw("cols1", b.cols);
+        b.buildMenu();
+      }
+      b.buildHead();
+    }
+    applyLayout();
+    saveLayout();
+    renderAll(true);
+  };
+  $("stack").onclick = () => { layout.stacked = !layout.stacked; applyLayout(); };
+  $("link").onclick = () => {
+    layout.linked = !layout.linked;
+    if (layout.linked) {
+      const a = PANES[0], b = PANES[1];
+      b.sortKey = a.sortKey;
+      b.sortDir = -a.sortDir;
+      if (!b.cols.includes(b.sortKey)) {
+        b.cols.push(b.sortKey); saveRaw("cols1", b.cols); b.buildMenu();
+      }
+      b.buildHead();
+      b.render(true);
+      saveLayout();
+    }
+    applyLayout();
+  };
+  applyLayout();
+
+  // ---------------------------------------------------------------- alerts
+  let audio = null;
+  function ping() {
+    if (!sound) return;
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      const o = audio.createOscillator(), g = audio.createGain();
+      o.type = "sine"; o.frequency.value = 880;
+      g.gain.setValueAtTime(0.06, audio.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.25);
+      o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + 0.26);
+    } catch (e) { }
+  }
+  // throttled per pair, not per row, so a split view flashes both sides but only beeps once
+  function flashRow(i) {
+    for (const p of PANES) {
+      if (!p.visible()) continue;
+      const rec = p.trs.get(i);
+      if (!rec) continue;
+      rec.tr.classList.remove("flash");
+      void rec.tr.offsetWidth;
+      rec.tr.classList.add("flash");
+    }
+  }
+
+  function checkAlert(i, r) {
+    const now = Date.now();
+
+    // A single 1-minute move fires constantly on a jumpy alt, which teaches
+    // you to ignore it. The campaign alert fires on the STATE CHANGE instead:
+    // a pair crossing N spike-minutes within the last hour, which is the
+    // thing actually worth being interrupted for.
+    const ch = +$("campHits").value;
+    if (ch && r.sph1 !== null && r.sph1 !== undefined) {
+      const was = campSeen[i] || 0;
+      if (r.sph1 >= ch && was < ch && now - (campAt[i] || 0) > 900000) {
+        campAt[i] = now;
+        flashRow(i);
+        ping();
+        noteCampaign(i, r);
+      }
+      campSeen[i] = r.sph1;
+    }
+
+    const th = +$("alertPct").value;
+    if (!th || r.m1 === null || r.m1 === undefined) return;
+    if (Math.abs(r.m1) < th) return;
+    if (now - (alertAt[i] || 0) < 60000) return;
+    alertAt[i] = now;
+    flashRow(i);
+    ping();
+  }
+
+  // a short log of what just woke up, so a fire you missed is still visible
+  function noteCampaign(i, r) {
+    const m = META[i];
+    if (!m) return;
+    CAMPLOG.unshift({ t: Date.now(), b: m.b, hits: r.sph1, d1: r.d1 });
+    if (CAMPLOG.length > 12) CAMPLOG.length = 12;
+    renderCampLog();
+  }
+
+  function renderCampLog() {
+    const el = $("camplog");
+    if (!el) return;
+    $("campbar").classList.toggle("show", CAMPLOG.length > 0);
+    if (!CAMPLOG.length) { el.textContent = ""; return; }
+    el.innerHTML = CAMPLOG.map(c => {
+      const mins = Math.round((Date.now() - c.t) / 60000);
+      return '<span class="fired" title="' + c.hits + ' spike-minutes in the hour">'
+        + c.b + " " + fmtPct(c.d1) + " <i>" + (mins ? mins + "m" : "now") + "</i></span>";
+    }).join("");
+  }
+
+  // ---------------------------------------------------------------- notes modal
+  let noteSym = null;
+  function openNote(s) {
+    noteSym = s;
+    const n = store.notes[s] || {};
+    $("mtitle").textContent = s;
+    $("mtgt").value = n.tgt || "";
+    $("mnote").value = n.note || "";
+    $("modal").classList.add("show");
+    $("mnote").focus();
+  }
+  $("msave").onclick = () => {
+    const tgt = parseFloat($("mtgt").value);
+    const note = $("mnote").value.trim();
+    if (!note && !isFinite(tgt)) delete store.notes[noteSym];
+    else store.notes[noteSym] = { tgt: isFinite(tgt) ? tgt : null, note };
+    save("notes"); $("modal").classList.remove("show"); recompute(); renderAll(true);
+  };
+  $("mdel").onclick = () => {
+    delete store.notes[noteSym]; save("notes");
+    $("modal").classList.remove("show"); recompute(); renderAll(true);
+  };
+  $("mcancel").onclick = () => $("modal").classList.remove("show");
+  $("modal").onclick = (e) => { if (e.target.id === "modal") $("modal").classList.remove("show"); };
+
+  // A full re-filter, not a pass over the rows already on screen.
+  // The old version hid non-matches inside p.order, which is the list AFTER
+  // the Top-N cut — so searching a pane sorted by up-spikes could never
+  // surface a pair that had just spiked down, because it was never in that
+  // pane's rows to begin with.
+  $("q").oninput = () => renderAll(true);
+  $("ven").onchange = () => renderAll(true);
+  $("minv").onchange = () => renderAll(true);
+  $("lim").onchange = () => renderAll(true);
+  $("starOnly").onclick = (e) => { starOnly = !starOnly; e.target.classList.toggle("on", starOnly); renderAll(true); };
+  $("freeze").onclick = (e) => { frozen = !frozen; e.target.classList.toggle("on", frozen); if (!frozen) renderAll(true); };
+  $("beep").onclick = (e) => { sound = !sound; e.target.classList.toggle("on", sound); if (sound) ping(); };
+  // Δmark against the global mark.
+  // New marks store the actual price, so this is a true change since that
+  // moment. Marks saved before that change only hold 1D percentages, so they
+  // fall back to the old subtraction — which divided by the day open rather
+  // than the marked price and so understated big movers. Pressing "mark now"
+  // once upgrades it.
+  function dmarkOf(r, sym) {
+    const mk = store.mark;
+    if (!mk) return null;
+    if (mk.px) {
+      const p0 = mk.px[sym];
+      return (p0 > 0 && r.last > 0) ? (r.last / p0 - 1) * 100 : null;
+    }
+    if (mk.d1) {
+      const m0 = mk.d1[sym];
+      return (m0 === undefined || r.d1 === null || r.d1 === undefined) ? null : r.d1 - m0;
+    }
+    return null;
+  }
+  // Best and worst reached since the mark, from the server's stored minute
+  // bars. Δmark is a NET number: a pair that ran 35% while you were away and
+  // gave it all back reads 0.00 and looks like it never moved, which is
+  // precisely the pair worth knowing about.
+  let EXTREMES = {};          // wire index -> [highPrice, lowPrice] since mark
+  let extremesTs = 0;
+
+  async function loadExtremes(force) {
+    const mk = store.mark;
+    if (!mk || !mk.px) { EXTREMES = {}; return; }
+    const ts = Math.floor(mk.ts / 1000);
+    if (!force && ts === extremesTs && Object.keys(EXTREMES).length) return;
+    try {
+      const res = await fetch("/api/since?ts=" + ts);
+      const j = await res.json();
+      EXTREMES = j.ok ? (j.d || {}) : {};
+      extremesTs = ts;
+    } catch (e) { /* the store is optional; the rest of the page carries on */ }
+  }
+
+  function markExtremes(r, sym) {
+    const mk = store.mark;
+    if (!mk || !mk.px) return [null, null];
+    const p0 = mk.px[sym];
+    const hl = EXTREMES[r.i];
+    if (!(p0 > 0) || !hl) return [null, null];
+    const hi = hl[0], lo = hl[1];
+    // include the live price, since the newest minute is not on disk yet
+    const h = Math.max(hi || 0, r.last || 0);
+    const l = Math.min(lo || Infinity, r.last || Infinity);
+    return [
+      h > 0 ? (h / p0 - 1) * 100 : null,
+      isFinite(l) && l > 0 ? (l / p0 - 1) * 100 : null,
+    ];
+  }
+
+  // tgt and Δmark are derived client-side, not sent by the server.
+  function derive(r, m) {
+    if (!r || !m) return;
+    const nt = store.notes[m.s];
+    r.tgt = (nt && nt.tgt && r.last) ? (nt.tgt / r.last - 1) * 100 : null;
+    r.dmark = dmarkOf(r, m.s);
+    const be = markExtremes(r, m.s);
+    r.bmark = be[0];
+    r.wmark = be[1];
+  }
+  // Recompute every row at once, otherwise a row only picks up a new mark
+  // when it next ticks.
+  function recompute() {
+    for (const r of R) if (r) derive(r, META[r.i]);
+  }
+  $("mark").onclick = () => {
+    const px = {}, d1 = {};
+    for (const r of R) {
+      if (!r || !r.last) continue;
+      const s = META[r.i].s;
+      px[s] = r.last;
+      if (r.d1 !== null && r.d1 !== undefined) d1[s] = r.d1;
+    }
+    store.mark = { ts: Date.now(), px, d1 };
+    save("mark");
+    EXTREMES = {}; extremesTs = 0;
+    loadExtremes(true).then(() => { recompute(); renderAll(true); renderWatch(); });
+    recompute(); renderAll(true); renderWatch();
+  };
+
+  function markAge() {
+    if (!store.mark) return "never";
+    const m = Math.round((Date.now() - store.mark.ts) / 60000);
+    if (m < 60) return m + "m ago";
+    const h = Math.floor(m / 60);
+    return h + "h" + (m % 60 ? (m % 60) + "m" : "") + " ago";
+  }
+
+  // One click for the layout that gets rebuilt by hand every session: split
+  // view, both panes sorted by spike in opposite directions, campaign columns
+  // switched on in both.
+  const HUNT_COLS = ["star", "sym", "ven", "last", "spark", "m1", "m5", "d1",
+    "rspk", "sph1", "sph6", "mprint", "big1h", "flow", "off7lo", "loage",
+    "rvol", "spk", "age", "note"];
+
+  $("hunt").onclick = () => {
+    if (!layout.split) { layout.split = true; }
+    layout.linked = false;
+    for (const p of PANES) {
+      p.cols = HUNT_COLS.slice();
+      saveRaw("cols" + p.idx, p.cols);
+      p.sortKey = "spk";
+      p.sortDir = p.idx === 0 ? -1 : 1;
+      p.buildHead();
+    }
+    saveLayout();
+    applyLayout();
+    renderAll(true);
+    $("hunt").classList.add("on");
+    setTimeout(() => $("hunt").classList.remove("on"), 900);
+  };
+
+  // ------------------------------------------------------------- watchlist
+  // A fixed panel of hand-picked pairs. Each one shows a single percentage,
+  // measured from whatever basis that pair is set to. "mark" means: this
+  // pair's own mark if it has one, otherwise the global mark from the header.
+  const WBASES = [["m1", "1m"], ["m5", "5m"], ["m15", "15m"], ["h1", "1h"],
+  ["h4", "4H"], ["d1", "1D"], ["d7", "1W"], ["mark", "mark"]];
+  const WSPAN = { m1: 3, m5: 4, m15: 6, h1: 8, h4: 10, d1: 12, d7: 25, mark: 6 };
+  const WROWS = new Map();
+  // TV logo fallback logic to handle naming quirks
+  function createLogo(symText) {
+    const img = document.createElement("img");
+    img.className = "wlogo";
+    img.crossOrigin = "";
+    img.decoding = "async";
+
+    // Most common patterns first, then weird overrides
+    const urls = [
+      `XTVC${symText}`,
+      `XTVC${symText}2`,
+      `XTVC${symText}3`,
+      `XTVC1000${symText}`,
+      `XTVC${symText}${symText}`,
+      `XTVC${symText}STEPN`
+    ];
+
+    img.dataset.idx = "0";
+    img.src = `https://s3-symbol-logo.tradingview.com/crypto/${urls[0]}.svg`;
+
+    img.onerror = function () {
+      let idx = parseInt(this.dataset.idx, 10) + 1;
+      if (idx < urls.length) {
+        this.dataset.idx = idx;
+        this.src = `https://s3-symbol-logo.tradingview.com/crypto/${urls[idx]}.svg`;
+      } else {
+        // Just hide it if none work, better than broken image icon
+        this.style.display = 'none';
+      }
+    };
+    return img;
+  }
+
+  function hhmm(ms) {
+    if (!ms) return "";
+    const d = new Date(ms);
+    return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+  }
+  function saveWatch() { save("watch"); }
+  function watchAdd(raw) {
+    let sym = String(raw || "").trim().toUpperCase();
+    if (!sym) return false;
+    if (!(sym in IDX_BY_SYM)) {
+      // typing the bare asset is enough: XTZ finds XTZUSDT \\ ill take some xtz IYKWIM LELz x
+      if ((sym + "USDT") in IDX_BY_SYM) sym += "USDT";
+      else return false;
+    }
+    if (!store.watch.items.some(it => it.s === sym)) {
+      store.watch.items.push({ s: sym, basis: null, mpx: 0, mts: 0 });
+      saveWatch();
+    }
+    renderWatch();
+    return true;
+  }
+  function watchRemove(sym) {
+    store.watch.items = store.watch.items.filter(it => it.s !== sym);
+    saveWatch(); renderWatch();
+  }
+
+  async function backdate(rec, value) {
+    if (!value) return;
+    const [h, m] = value.split(":").map(Number);
+    if (!isFinite(h) || !isFinite(m)) return;
+    const now = new Date();
+    const when = new Date(now);
+    when.setHours(h, m, 0, 0);
+    // a time later than right now can only mean yesterday \\ are you fucking high rn
+    if (when.getTime() > now.getTime()) when.setDate(when.getDate() - 1);
+    rec.note.textContent = "looking up " + value + "...";
+    rec.note.className = "wnote";
+    rec.errUntil = Date.now() + 20000;
+    try {
+      const res = await fetch("/api/pxat?sym=" + encodeURIComponent(rec.it.s) +
+        "&ts=" + Math.floor(when.getTime() / 1000));
+      const j = await res.json();
+      if (!res.ok || !j.px) {
+        rec.note.className = "wnote err";
+        rec.note.textContent = j.oldest
+          ? "history only reaches " + hhmm(j.oldest * 1000)
+          : (j.err || "no price recorded then");
+        rec.errUntil = Date.now() + 8000;
+        return;
+      }
+      rec.it.mpx = j.px;
+      rec.it.mts = when.getTime();
+      rec.it.basis = "mark";
+      rec.sel.value = "mark";
+      rec.errUntil = 0;
+      saveWatch(); paintWatch();
+    } catch (e) {
+      rec.note.className = "wnote err";
+      rec.note.textContent = "lookup failed";
+      rec.errUntil = Date.now() + 8000;
+    }
+  }
+
+
+  function makeWatchRow(it) {
+    const el = document.createElement("div");
+    el.className = "witem";
+
+    el.onclick = () => {
+      l2.classList.toggle("visible");
+    };
+
+    const l1 = document.createElement("div"); l1.className = "l1";
+    const baseSym = it.s.replace(/USDT$/, "");
+    const logo = createLogo(baseSym);
+    const sym = document.createElement("span"); sym.className = "wsym";
+    sym.textContent = baseSym;
+    sym.title = "open " + it.s + " on TradingView";
+    const px = document.createElement("span"); px.className = "wpx";
+    px._prevStr = "";       // last rendered price string (for digit diffing)
+    px._prevLast = null;    // last rendered numeric price (for direction)
+    px._flashTimer = null;  // timeout handle for the 250ms flash
+    const pct = document.createElement("span"); pct.className = "wpct";
+    l1.append(logo, sym, px, pct);
+
+    const l2 = document.createElement("div"); l2.className = "l2";
+    const sel = document.createElement("select");
+    sel.title = "what this percentage is measured from";
+    const dflt = document.createElement("option");
+    dflt.value = ""; dflt.textContent = "default";
+    sel.appendChild(dflt);
+    for (const [k, lbl] of WBASES) {
+      const o = document.createElement("option");
+      o.value = k; o.textContent = lbl;
+      sel.appendChild(o);
+    }
+    sel.onchange = () => { rec.it.basis = sel.value || null; saveWatch(); paintWatch(); };
+
+    const mk = document.createElement("button");
+    mk.textContent = "mark";
+    mk.title = "use this pair's price right now as its baseline";
+    mk.onclick = () => {
+      const i = IDX_BY_SYM[rec.it.s];
+      const r = (i === undefined) ? null : R[i];
+      if (!r || !r.last) return;
+      rec.it.mpx = r.last; rec.it.mts = Date.now(); rec.it.basis = "mark";
+      sel.value = "mark"; rec.errUntil = 0;
+      saveWatch(); paintWatch();
+    };
+
+    const tm = document.createElement("input");
+    tm.type = "time";
+    tm.title = "back-date the mark to a time earlier today (about 93 minutes of history)";
+    tm.onchange = () => backdate(rec, tm.value);
+
+    const sp = document.createElement("span"); sp.className = "spacer";
+    const del = document.createElement("button");
+    del.className = "wdel"; del.textContent = "×"; del.title = "remove from watchlist";
+    del.onclick = () => watchRemove(rec.it.s);
+
+    l2.append(sel, mk, tm, sp, del);
+    const note = document.createElement("div"); note.className = "wnote";
+    el.append(l1, l2, note);
+
+
+    const rec = { el, it, px, pct, sel, mk, tm, note, errUntil: 0 };
+    return rec;
+  }
+
+  function renderWatch() {
+    const body = $("wbody");
+    const items = store.watch.items;
+    if (!items.length) {
+      WROWS.clear();
+      body.innerHTML = '<div class="empty">Nothing here yet.<br>Type a pair above, ' +
+        'or press +★ to pull in everything you have starred.</div>';
+      return;
+    }
+    if (body.firstElementChild && body.firstElementChild.className === "empty") body.innerHTML = "";
+    const want = new Set(items.map(it => it.s));
+    for (const [sym, rec] of WROWS) {
+      if (!want.has(sym)) { rec.el.remove(); WROWS.delete(sym); }
+    }
+    const frag = document.createDocumentFragment();
+    for (const it of items) {
+      let rec = WROWS.get(it.s);
+      if (!rec) { rec = makeWatchRow(it); WROWS.set(it.s, rec); }
+      rec.it = it;
+      frag.appendChild(rec.el);
+    }
+    body.appendChild(frag);
+    paintWatch();
+  }
+
+  // ---- per-digit price coloring for the watchlist ----
+  // Diffs the formatted price string character-by-character against the
+  // previous render.  On any change the whole number flashes green/red for
+  // 250ms, then only the digits that actually differ retain the color until
+  // THEY change in a subsequent tick.
+  function updateWpx(el, r, m) {
+    const newStr = (r && r.last) ? fmtPx(r.last, m ? m.p : undefined) : "-";
+    const oldStr = el._prevStr;
+
+    // Nothing changed -> nothing to do
+    if (newStr === oldStr) return;
+
+    // Determine direction from the numeric price, not the string
+    const newVal = (r && r.last) ? r.last : null;
+    const oldVal = el._prevLast;
+    // "up" if new > old, "dn" if new < old, null if indeterminate (first render)
+    let dir = null;
+    if (oldVal !== null && newVal !== null && oldVal !== newVal) {
+      dir = newVal > oldVal ? "up" : "dn";
+    }
+
+    // Build or reconcile child spans to match newStr length.
+    // Reuse existing spans where possible to avoid unnecessary DOM churn.
+    const kids = el.children;
+    while (kids.length > newStr.length) el.removeChild(el.lastChild);
+    while (kids.length < newStr.length) {
+      const s = document.createElement("span");
+      el.appendChild(s);
+    }
+
+    // Walk each character position
+    for (let c = 0; c < newStr.length; c++) {
+      const span = kids[c];
+      const newChar = newStr[c];
+      const oldChar = (c < oldStr.length) ? oldStr[c] : undefined;
+
+      // Update the text content if the character at this position changed
+      if (span.textContent !== newChar) span.textContent = newChar;
+
+      if (dir) {
+        // This character changed from the previous price string
+        if (newChar !== oldChar) {
+          // Mark it with the directional color - it will persist until
+          // this specific character changes again in a future update
+          span.className = dir === "up" ? "d-up" : "d-dn";
+        }
+        // If the character is the SAME as before (e.g. the "1" in "100.03"
+        // when it was "100.00"), we leave whatever class it already has.
+        // After the flash ends it will revert to its existing state, which
+        // might be a color from a prior change or no color at all.
+      }
+      // dir===null means first render or same price, no coloring needed.
+      // On first render all spans start classless (default color = var(--txt)).
+    }
+
+    // Full-number flash for 250ms
+    if (dir) {
+      // Cancel any in-flight flash timer so rapid updates don't stack
+      if (el._flashTimer) clearTimeout(el._flashTimer);
+
+      const flashClass = dir === "up" ? "flash-up" : "flash-dn";
+      el.classList.add(flashClass);
+
+      el._flashTimer = setTimeout(() => {
+        el.classList.remove("flash-up", "flash-dn");
+        el._flashTimer = null;
+      }, 400);
+    }
+
+    el._prevStr = newStr;
+    el._prevLast = newVal;
+  }
+
+  function paintWatch() {
+    if (!store.watch.open) return;
+    const now = Date.now();
+    for (const rec of WROWS.values()) {
+      const it = rec.it;
+      const i = IDX_BY_SYM[it.s];
+      const r = (i === undefined) ? null : R[i];
+      const m = (i === undefined) ? null : META[i];
+      updateWpx(rec.px, r, m);
+
+      const b = it.basis || store.watch.def;
+      let v = null, note = "";
+      if (!r || !r.last) {
+        note = (i === undefined) ? "not in the universe" : "waiting for a price";
+      } else if (b !== "mark") {
+        v = r[b];
+      } else if (it.mpx > 0) {
+        v = (r.last / it.mpx - 1) * 100;
+        note = "own mark " + hhmm(it.mts) + " @ " + fmtPx(it.mpx, m ? m.p : undefined);
+      } else {
+        v = dmarkOf(r, it.s);
+        note = store.mark ? "global mark " + hhmm(store.mark.ts) : "no mark set yet";
+      }
+      set(rec.pct, fmtPct(v), pctColor(v, WSPAN[b] || 8));
+      if (rec.sel.value !== (it.basis || "")) rec.sel.value = it.basis || "";
+      // don't stomp a lookup message while it is still worth reading
+      if (!(rec.errUntil && now < rec.errUntil) && rec.note._t !== note) {
+        rec.note.textContent = note;
+        rec.note._t = note;
+        rec.note.className = "wnote";
+      }
+    }
+  }
+
+  function applyWatch() {
+    document.body.classList.toggle("watch", !!store.watch.open);
+    $("watchbtn").classList.toggle("on", !!store.watch.open);
+    $("wdef").value = store.watch.def;
+    renderWatch();
+  }
+  $("watchbtn").onclick = () => {
+    store.watch.open = !store.watch.open;
+    saveWatch(); applyWatch();
+  };
+  $("wdef").onchange = () => {
+    store.watch.def = $("wdef").value;
+    saveWatch(); paintWatch();
+  };
+  // ----------------------------------------------------------- desk channel
+  // This page is embedded in the desk shell, which owns the order ticket and
+  // the positions table. It is served cross-origin from there on purpose —
+  // keeping it on its own host means stars, notes, targets, column layouts
+  // and the global mark stay the single set he has been accumulating, instead
+  // of being orphaned behind a new origin. The price of that is that the two
+  // pages cannot touch each other, so they talk here instead.
+  //
+  // Opened on its own at :8777 there is no parent, and every one of these
+  // falls back to what it always did.
+  const EMBEDDED = window.parent && window.parent !== window;
+
+  function toDesk(type, sym) {
+    if (!EMBEDDED) return false;
+    const i = IDX_BY_SYM[sym];
+    const m = (i === undefined) ? null : META[i];
+    if (!m) return false;
+    const r = (i === undefined) ? null : R[i];
+    try {
+      window.parent.postMessage({
+        source: "screener", type: type,
+        sym: m.s, base: m.b, gate: m.g || "", venues: m.v,
+        last: r ? r.last : null,
+      }, "*");
+      return true;
+    } catch (e) { return false; }
+  }
+
+  // ------------------------------------------------- hold-to-scroll-the-page
+  //
+  // The desk lets you hold CMD or SHIFT to make its panes transparent to the
+  // wheel, so the whole page scrolls instead of whichever pane happens to be
+  // under the cursor. It does that by watching for key events on ITS window.
+  //
+  // This page is a cross-origin iframe. The moment you click a row in here —
+  // which is the main thing you do in here — keyboard focus moves into this
+  // document, and from then on the desk's window receives no key events at
+  // all. Nothing is broken on its side; the events are simply not its to see.
+  // That is why the feature worked "sometimes" and why it seemed to depend on
+  // where the cursor had been.
+  //
+  // So this page reports the modifier state upward. Edge-triggered, because a
+  // postMessage per mousemove at 60Hz across an origin boundary is not free on
+  // the machine this runs on.
+  let MODS_DOWN = false;
+
+  function tellMods(down) {
+    if (!EMBEDDED || down === MODS_DOWN) return;
+    MODS_DOWN = down;
+    try {
+      window.parent.postMessage({ source: "screener", type: "mods", down }, "*");
+    } catch (e) { /* the desk is gone; nothing to tell */ }
+  }
+
+  if (EMBEDDED) {
+    const readMods = (e) => tellMods(!!(e.metaKey || e.shiftKey));
+    window.addEventListener("keydown", readMods, true);
+    window.addEventListener("keyup", readMods, true);
+    window.addEventListener("mousemove", readMods, true);
+    window.addEventListener("wheel", readMods, { capture: true, passive: true });
+    // CMD+Tab with the key still down never delivers a keyup here either, and
+    // a stuck "down" would leave the desk's panes permanently unscrollable.
+    window.addEventListener("blur", () => tellMods(false));
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) tellMods(false);
+    });
+  }
+
+  // Clicking a row anywhere that is not already interactive hands the pair to
+  // the ticket. Nothing is placed by this — it only fills the form in — so a
+  // stray click costs nothing.
+  document.addEventListener("click", (e) => {
+    if (!EMBEDDED) return;
+    if (e.target.closest("a, .st, .note, th, button, select, input")) return;
+    const tr = e.target.closest("#panes tbody tr");
+    if (!tr) return;
+    const a = tr.querySelector("td.sym a");
+    if (!a) return;
+    const mark = a.href.indexOf("BINANCE%3A");
+    if (mark === -1) return;
+    const sym = decodeURIComponent(a.href.slice(mark + 10)).replace(/\.P$/, "");
+    toDesk("pick", sym);
+  });
+
+  // ----------------------------------------------------------- add picker
+  // The old box was a bare input with a datalist, which only helped if you
+  // already knew the answer. This is the same type-arrow-enter interaction as
+  // the order ticket, and it gives each row two separate actions.
+  const WPICK_MAX = 60;
+  let wpIdx = -1;
+
+  function wpMatches() {
+    const q = $("wadd").value.trim().toUpperCase().replace("/", "_");
+    if (!q) {
+      // No query: lead with the busiest pairs. The whole universe has to be
+      // ranked before the cut — slicing first and sorting the slice just
+      // reorders the top of the alphabet, which is not a useful list.
+      const all = META.filter(Boolean).slice();
+      all.sort((a, b) => {
+        const ra = R[a.i], rb = R[b.i];
+        return ((rb && rb.q24) || 0) - ((ra && ra.q24) || 0);
+      });
+      return all.slice(0, WPICK_MAX);
+    }
+    const starts = [], contains = [];
+    for (const m of META) {
+      if (!m) continue;
+      if (m.b.startsWith(q) || m.s.startsWith(q)) starts.push(m);
+      else if (m.b.includes(q) || m.s.includes(q)) contains.push(m);
+      if (starts.length >= WPICK_MAX) break;
+    }
+    return starts.concat(contains).slice(0, WPICK_MAX);
+  }
+
+  function renderWPick() {
+    const list = $("wlist");
+    const rows = wpMatches();
+    const onList = new Set(store.watch.items.map(it => it.s));
+    let h = EMBEDDED
+      ? '<div class="hint"></div>'
+      : '<div class="hint"></div>';
+    if (!rows.length) {
+      h += '<div class="hint">nothing matches that</div>';
+    } else {
+      h += rows.map((m, k) => {
+        const r = R[m.i];
+        const v = r ? r.d1 : null;
+        const inList = onList.has(m.s);
+        return '<div class="wp' + (k === wpIdx ? " active" : "") + '" data-s="' + m.s + '">'
+          + '<span class="n">' + m.b + '</span>'
+          + '<span class="v">' + m.s + (m.g ? "" : " &middot; aster only") + '</span>'
+          + '<span class="p">' + (r && r.last ? fmtPx(r.last, m.p) : "") + '</span>'
+          + '<span class="c" style="' + pctColor(v, 12) + '">' + fmtPct(v) + '</span>'
+          + '<button class="plus' + (inList ? " in" : "") + '" data-add="' + m.s + '" title="'
+          + (inList ? "already on the watchlist" : "add to the watchlist") + '">'
+          + (inList ? "&check;" : "+") + '</button>'
+          + '</div>';
+      }).join("");
+    }
+    list.innerHTML = h;
+    list.classList.add("open");
+  }
+
+  function closeWPick() { $("wlist").classList.remove("open"); wpIdx = -1; }
+
+  // a name that matches nothing stays in the box, so a typo is fixable,
+  // but it has to say so or it just looks broken
+  function tryAdd(sym) {
+    const el = $("wadd");
+    const val = sym || el.value;
+    if (!String(val).trim()) return;
+    if (watchAdd(val)) {
+      el.value = "";
+      el.classList.remove("reject");
+      closeWPick();
+      return;
+    }
+    el.classList.remove("reject");
+    void el.offsetWidth;
+    el.classList.add("reject");
+  }
+
+  $("wlist").addEventListener("mousedown", (e) => {
+    // mousedown, not click: the input's blur would tear the list down first
+    e.preventDefault();
+    const plus = e.target.closest("button[data-add]");
+    if (plus) {
+      // stay open so several can be added in a row
+      watchAdd(plus.dataset.add);
+      renderWPick();
+      return;
+    }
+    const row = e.target.closest(".wp[data-s]");
+    if (!row) return;
+    const sym = row.dataset.s;
+    if (EMBEDDED) {
+      if (toDesk("trade", sym)) { closeWPick(); $("wadd").value = ""; return; }
+    }
+    // standalone, or the shell did not recognise it: the old behaviour
+    window.open("https://www.tradingview.com/chart/?symbol=BINANCE:" + sym + ".P", "_blank");
+    closeWPick();
+  });
+
+  $("wadd").oninput = () => { $("wadd").classList.remove("reject"); wpIdx = -1; renderWPick(); };
+  $("wadd").onfocus = renderWPick;
+  $("wadd").onblur = () => setTimeout(closeWPick, 130);
+  $("wadd").onkeydown = (e) => {
+    const open = $("wlist").classList.contains("open");
+    if (e.key === "Escape") { closeWPick(); return; }
+    if (!open) { if (e.key === "ArrowDown") { renderWPick(); e.preventDefault(); } return; }
+    const rows = $("wlist").querySelectorAll(".wp[data-s]");
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      if (!rows.length) return;
+      wpIdx += (e.key === "ArrowDown" ? 1 : -1);
+      if (wpIdx < 0) wpIdx = rows.length - 1;
+      if (wpIdx >= rows.length) wpIdx = 0;
+      renderWPick();
+      const a = $("wlist").querySelector(".wp.active");
+      if (a) a.scrollIntoView({ block: "nearest" });
+    } else if (e.key === "Enter") {
+      // Enter adds, which is the muscle memory this box already had. Trading
+      // is always a deliberate click on the name.
+      e.preventDefault();
+      const target = rows[wpIdx >= 0 ? wpIdx : 0];
+      tryAdd(target ? target.dataset.s : $("wadd").value);
+    }
+  };
+
+  $("wstars").onclick = () => {
+    for (const sym of Object.keys(store.stars)) if (store.stars[sym]) watchAdd(sym);
+  };
+  applyWatch();
+
+  // ---------------------------------------------------------------- clocks
+  setInterval(() => {
+    const now = new Date();
+    const nxt = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
+    let s = Math.max(0, Math.floor((nxt - now.getTime()) / 1000));
+    const h = String(Math.floor(s / 3600)).padStart(2, "0");
+    const m = String(Math.floor(s % 3600 / 60)).padStart(2, "0");
+    const ss = String(s % 60).padStart(2, "0");
+    $("reset").textContent = h + ":" + m + ":" + ss;
+    $("markage").textContent = markAge();
+  }, 1000);
+
+  // ---------------------------------------------------------------- socket
+  let ws = null, redrawSpark = false;
+  function connect() {
+    const proto = location.protocol === "https:" ? "wss:" : "ws:";
+    ws = new WebSocket(proto + "//" + location.host + "/ws");
+    ws.onopen = () => { $("dot").className = "dot live"; $("conn").textContent = "live"; };
+    ws.onclose = () => {
+      $("dot").className = "dot dead"; $("conn").textContent = "reconnecting";
+      setTimeout(connect, 1500);
+    };
+    ws.onerror = () => { try { ws.close(); } catch (e) { } };
+    ws.onmessage = (ev) => {
+      const msg = JSON.parse(ev.data);
+      if (msg.t === "snap") {
+        META = [];
+        IDX_BY_SYM = {};
+        for (const s of msg.syms) {
+          META[s.i] = s;
+          IDX_BY_SYM[s.s] = s.i;
+        }
+        renderWatch();
+        R.length = 0;
+        for (const p of PANES) { p.trs.clear(); p.tb.innerHTML = ""; p.order = []; }
+        $("npairs").textContent = msg.syms.length;
+        const sk = msg.skipped || {};
+        $("skipped").textContent =
+          "+" + (sk.gate_only || 0) + " Gate-only and " + (sk.aster_only || 0) +
+          " Aster-only pairs have no Binance feed (stock perps, venue natives) - excluded";
+      } else if (msg.t === "upd") {
+        const cols = ["i", "last", "m1", "m5", "m15", "h1", "h4", "d1", "d7", "q24", "vph", "rvol", "spk", "dhi", "dlo", "pos", "age",
+          "sph1", "sph6", "rspk", "mprint", "big1h", "flow",
+          "off7lo", "loage", "off7hi"];
+        for (const d of msg.d) {
+          const i = d[0];
+          let r = R[i];
+          if (!r) { r = R[i] = { i }; }
+          for (let k = 1; k < cols.length; k++) r[cols[k]] = d[k];
+          derive(r, META[i]);
+          checkAlert(i, r);
+        }
+      } else if (msg.t === "spark") {
+        SPARK = msg.d; redrawSpark = true;
+      } else if (msg.t === "status") {
+        $("anch").textContent = (msg.anchor_age === null || msg.anchor_age === undefined)
+          ? "loading" : msg.anchor_age + "s";
+        let label = "binance down";
+        if (msg.ws) label = msg.src === "ws" ? "live · futures ws" : "live · futures rest " + (msg.lat || 0) + "ms";
+        $("conn").textContent = label;
+        $("conn").title = msg.src === "ws"
+          ? "streaming !miniTicker@arr from fstream.binance.com"
+          : "fstream.binance.com's ticker streams are dead from the Tokyo box (handshake, then silence), "
+          + "so prices come from /fapi/v1/ticker/price polled twice a second. Measured head to head, "
+          + "the websocket sees 6.4x more ticks and changes no column on this page. "
+          + "It is retried in the background and takes over if it ever unblocks.";
+        $("dot").className = "dot " + (msg.ws ? "live" : "dead");
+        const tp = $("tape");
+        if (msg.tape) {
+          tp.textContent = fmtUsd(msg.tape_msgs || 0) + " trades";
+          tp.style.color = "";
+        } else {
+          tp.textContent = "down";
+          tp.style.color = "var(--dn)";
+        }
+      }
+    };
+  }
+  connect();
+
+  // ---------------------------------------------------------------- loops
+  function forceDrawSparks() {
+    for (const p of PANES) {
+      if (!p.visible()) continue;
+      for (const i of p.order) {
+        const rec = p.trs.get(i);
+        if (rec && rec.cells._cv) drawSpark(rec.cells._cv, SPARK[i], R[i] ? (R[i].h1 || 0) : 0);
+      }
+    }
+  }
+
+  setInterval(() => { renderAll(false); paintWatch(); }, 400);
+  // the mark's high/low water marks only change on the minute
+  setInterval(() => { loadExtremes(true).then(recompute); }, 30000);
+  setInterval(renderCampLog, 30000);
+  loadExtremes(true);
+  // periodic re-filter, but never fight the freeze button
+  setInterval(() => { if (!frozen) renderAll(true); }, 2500);
+  setInterval(() => {
+    if (!redrawSpark) return;
+    redrawSpark = false;
+    forceDrawSparks();
+  }, 1000);
+</script>
+</body>
+
+</html>

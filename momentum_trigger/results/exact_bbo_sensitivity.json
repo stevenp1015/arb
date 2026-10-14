@@ -1,0 +1,34 @@
+{
+  "five_second": {
+    "clustered_n": 505,
+    "mean_entry_improvement_bps": 0.5260553201343845,
+    "median_post_trigger_bbo_lag_ms": 5.0,
+    "net_ci95_bps": [
+      -10.258311269367361,
+      -8.417446319838326
+    ],
+    "net_mean_bps": -9.382359456315678,
+    "raw_n": 595,
+    "zero_fee_gross_ci95_bps": [
+      -2.2583112693673613,
+      -0.4174463198383263
+    ],
+    "zero_fee_gross_mean_bps": -1.3823594563156785
+  },
+  "frozen_exit": {
+    "clustered_n": 530,
+    "mean_entry_improvement_bps": 0.5106915686602042,
+    "median_post_trigger_bbo_lag_ms": 5.0,
+    "net_ci95_bps": [
+      -9.969452495899649,
+      -8.616298732348623
+    ],
+    "net_mean_bps": -9.307895085044189,
+    "raw_n": 622,
+    "zero_fee_gross_ci95_bps": [
+      -1.9694524958996487,
+      -0.6162987323486236
+    ],
+    "zero_fee_gross_mean_bps": -1.3078950850441888
+  }
+}

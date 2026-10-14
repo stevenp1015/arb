@@ -1,0 +1,70 @@
++/Users/ttig/.zshenv:1> . /Users/ttig/.cargo/env
++/Users/ttig/.cargo/env:4> case :/Users/ttig/development/flutter/bin:/Users/ttig/.cargo/bin:/Users/ttig/.gemini/antigravity-ide/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ttig/.foundry/bin: (*:/Users/ttig/.cargo/bin:*)
++/Users/ttig/.zshenv:2> export PATH=/Users/ttig/development/flutter/bin:/Users/ttig/development/flutter/bin:/Users/ttig/.cargo/bin:/Users/ttig/.gemini/antigravity-ide/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ttig/.foundry/bin
++/Users/ttig/.zshenv:3> export PATH=/Users/ttig/development/flutter/bin:/Users/ttig/development/flutter/bin:/Users/ttig/.cargo/bin:/Users/ttig/.gemini/antigravity-ide/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ttig/.foundry/bin:/Users/ttig/.foundry/bin
++./sync_and_refresh.sh:6> FILE=index.html 
++./sync_and_refresh.sh:7> REMOTE=tokyo2:/root/screener/ 
++./sync_and_refresh.sh:8> PREV_MOD='' 
++./sync_and_refresh.sh:10> echo 'watching index.html for changes. prepare your asshole for some aggressive syncing.'
+watching index.html for changes. prepare your asshole for some aggressive syncing.
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' '' ']'
++./sync_and_refresh.sh:15> [ -n '' ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5
++./sync_and_refresh.sh:12> true
++./sync_and_refresh.sh:13> LAST_MOD=+./sync_and_refresh.sh:13> stat -f %m index.html
++./sync_and_refresh.sh:13> LAST_MOD=1788735257 
++./sync_and_refresh.sh:15> [ 1788735257 '!=' 1788735257 ']'
++./sync_and_refresh.sh:35> PREV_MOD=1788735257 
++./sync_and_refresh.sh:36> sleep 0.5

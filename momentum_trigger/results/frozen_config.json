@@ -1,0 +1,64 @@
+{
+  "exit": {
+    "activation_bps": 20.0,
+    "hard_stop_bps": 30.0,
+    "max_hold_ms": 30000,
+    "trail_bps": 10.0
+  },
+  "fee_assumptions_bps": {
+    "maker": 0.0,
+    "taker_each_leg": 4.0
+  },
+  "holdout_opened": false,
+  "placement_latency_ms": 100,
+  "stage1_selection": {
+    "active_days": 10,
+    "active_symbol_days": 80,
+    "active_symbols": 8,
+    "event_weighted_mean_bps": -9.265262020518087,
+    "key": "w1000_q0.9950_s500_r1.00_f0.55",
+    "n": 7407,
+    "score": -9.272054444834508,
+    "selection_floor": 150,
+    "symbol_day_mean_bps": -9.203944462978415,
+    "symbol_day_se_bps": 0.13621996371218667
+  },
+  "stage2_selection": {
+    "active_days": 10,
+    "active_symbol_days": 69,
+    "active_symbols": 8,
+    "arms": 12722,
+    "event_weighted_mean_bps": -7.967290096527896,
+    "key": "o5_ttl1000",
+    "n": 477,
+    "score": -7.535397084543236,
+    "selection_floor": 75,
+    "symbol_day_mean_bps": -7.140430889006431,
+    "symbol_day_se_bps": 0.7899323910736094,
+    "trigger_rate": 0.06909290991982393,
+    "triggered": 879
+  },
+  "stage3_selection": {
+    "active_days": 10,
+    "active_symbol_days": 69,
+    "active_symbols": 8,
+    "event_weighted_mean_bps": -8.270751739998895,
+    "key": "h30_a20_t10_m30000",
+    "n": 507,
+    "score": -8.056248379482433,
+    "selection_floor": 75,
+    "symbol_day_mean_bps": -7.692800126091829,
+    "symbol_day_se_bps": 0.7268965067812082
+  },
+  "sustain": {
+    "flow_min": 0.55,
+    "impulse_ms": 1000,
+    "quantile": 0.995,
+    "retain": 1.0,
+    "sustain_ms": 500
+  },
+  "trigger": {
+    "offset_bps": 5.0,
+    "ttl_ms": 1000
+  }
+}
